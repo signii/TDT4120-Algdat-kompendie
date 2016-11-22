@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[norsk]{babel} 
+\usepackage{listings}
+\usepackage[sfdefault,light]{roboto}  %font
+\usepackage[T1]{fontenc} %font
+\usepackage{graphicx} %images
+\usepackage[table,xcdraw]{xcolor} %color in tables
+\usepackage{array} %tabular: allow multiple lines
+\usepackage{longtable} %table that can go over multiple lines
+\usepackage{amsfonts} %checkmark
+\usepackage{float} %force position
+\usepackage{booktabs}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\usepackage{setspace}%line spacing
+\onehalfspacing
+
+%\usepackage{multicol} %allows for multicolumn itemize
+
+\usepackage{geometry} %size of paper
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=25mm,
+ right=25mm,
+ top=25mm,
+ bottom=25mm,
+ }
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash}m{#1}} %better looking multirow cells
+
+\begin{document}
+\begin{center}
+\vspace*{4.5cm}
+\Huge{TDT4120}\\[2pc]
+\vspace{-1.5cm}
+\noindent\rule{11cm}{0.8pt}\\
+
+\Huge{Algoritmer og datastrukturer}\\[1pc]
+\vspace{3.5cm}
+
+\Large{2016}\\
+%\vspace{1.0cm}
+%\includegraphics[scale=0.6]{images/ntnu.png}
+\end{center}
+
+\setlength{\parindent}{4em}
+\setlength{\parskip}{1em} % space between index lines
+\renewcommand{\baselinestretch}{1.3} % space between lines
+
+\thispagestyle{empty}
+\null
+\newpage
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+\tableofcontents
+\newpage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{01innledning}
+\input{02datastrukturer}
+\input{03kjoretidsberegning}
+\input{04rekursjon}
+\input{05sorteringogsoking}
+
+\section{Definisjoner}
+\section{Algoritmer}
+\subsection{Sorteringsalgoritmer}
+\subsection{Grådige algoritmer}
+\subsection{Flyt-algoritmer}
+\section{kjøretider}
+\section{Datastrukturer}
+\section{Masterteoremet}
+\section{Grafer og trær}
+\section{Asymptotisk notasjon}
+\section{Hashing}
+\section{Rekursjon}
+\section{Residualnettverk}
+\section{Flytnettverk}
+\section{Dynamisk programmering}
+\section{Summasjonsformler}
+\section{Kombinatorikk}
+
+\section{Divide and Conquer}
+\section{The 0-1 Knapsack Problem}
+\section{Minimum Cut Problem}
+\section{Maskin-modellen}
+\section{P}
+\section{NP}
+\section{NP-komplette problemer}
+\section{NPC}
+\section{Hamiltonsykel}
+\section{Flytforøkende sti}
+\section{Korteste vei}
+
+\end{document}
