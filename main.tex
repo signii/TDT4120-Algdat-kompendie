@@ -12,10 +12,6 @@
 \usepackage{float} %force position
 \usepackage{booktabs}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
-\usepackage{setspace}%line spacing
-\onehalfspacing
-
-%\usepackage{multicol} %allows for multicolumn itemize
 
 \usepackage{geometry} %size of paper
  \geometry{
@@ -28,6 +24,30 @@
  }
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash}m{#1}} %better looking multirow cells
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 \begin{document}
 \begin{center}
@@ -44,9 +64,9 @@
 %\includegraphics[scale=0.6]{images/ntnu.png}
 \end{center}
 
-\setlength{\parindent}{4em}
-\setlength{\parskip}{1em} % space between index lines
-\renewcommand{\baselinestretch}{1.3} % space between lines
+\setlength{\parindent}{3.5em}
+%\setlength{\parskip}{1em} % space between index lines
+\renewcommand{\baselinestretch}{1.1} % space between lines
 
 \thispagestyle{empty}
 \null
@@ -61,39 +81,25 @@
 \pagenumbering{arabic}
 
 \input{01innledning}
+\newpage
 \input{02datastrukturer}
+\newpage
 \input{03kjoretidsberegning}
+\newpage
 \input{04rekursjon}
+\newpage
 \input{05sorteringogsoking}
-
-\section{Definisjoner}
-\section{Algoritmer}
-\subsection{Sorteringsalgoritmer}
-\subsection{Grådige algoritmer}
-\subsection{Flyt-algoritmer}
-\section{kjøretider}
-\section{Datastrukturer}
-\section{Masterteoremet}
-\section{Grafer og trær}
-\section{Asymptotisk notasjon}
-\section{Hashing}
-\section{Rekursjon}
-\section{Residualnettverk}
-\section{Flytnettverk}
-\section{Dynamisk programmering}
-\section{Summasjonsformler}
-\section{Kombinatorikk}
-
-\section{Divide and Conquer}
-\section{The 0-1 Knapsack Problem}
-\section{Minimum Cut Problem}
-\section{Maskin-modellen}
-\section{P}
-\section{NP}
-\section{NP-komplette problemer}
-\section{NPC}
-\section{Hamiltonsykel}
-\section{Flytforøkende sti}
-\section{Korteste vei}
+\newpage
+\input{06graferoggrafalgoritmer}
+\newpage
+\input{07dynamiskprogrammering}
+\newpage
+\input{08gradigealgoritmer}
+\newpage
+\input{09minimalespenntraer}
+\newpage
+\input{10problemkompleksitet}
+\newpage
+\input{11kjoretidertilpensumalgoritmer}
 
 \end{document}

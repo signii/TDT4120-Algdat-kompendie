@@ -1,3 +1,120 @@
 \section{Kjøretidsberegning}
 \subsection{Om kjøretider}
+For å vite hvor effektiv en algoritme er, ønsker man å vite hvor kjapp den er i forhold til hvor mye informasjon man sender inn. Noen ganger vil en dobling av antall inn-verdier bare øke kjøretiden med en konstant tid, andre ganger vil den doble kjøretiden, og ofte vil den øke med veldig mye.
+\\\\
+Kjøretider skal alltid oppgis med \textbf{asymptotisk notasjon}. Det vil si at man finner (teoretisk) matematisk funksjon for kjøretiden med antall inn-verdier som parameter. Deretter ser man på det leddet som dominerer mest i uttrykket når inn-verdiene blir store nok, og bruker dette (uten noe konstantledd) som et mål på hvor rask algoritmen er. Målet er at det ikke skal vokse særlig raskt.
+
+\begin{boxed}
+Anta at du har mange forskjellige tall, og du skal finne det største taller. Du sjekker da det første tallet, og setter denne som en midlertidig mulighet for at det er det største tallet. Deretter går du gjennom resten av tallene og sammenligner hver og en av dem med det tallet du antar er det største. Hvis du plukker opp et større tall enn du har fra før, setter du det nye til å være en mulighet for å være det største. Når du har gått gjennom alle tallene, vil det tallet du satte av som en mulig kandidat sist være det største tallet. Slik må det være, fordi da du plukket opp det største tallet satte du dette som en mulig kandidat og ingen andre tall var større. Dette gjelder selvsagt også om flere tall er like i verdi. Så lenge du ikke kunne ane hvor i bunken det største er da du begynte, vet du at du er nødt til å gå gjennom alle tallene en gang.
+\newline \newline
+På en andre siden trenger du ikke gå gjennom tallene flere ganger heller, for ved å bruke algoritmen beskrevet ovenfor, vet du at svaret er korrekt etter nøyaktig en gjennomgang (så lenge du ikke gjør noen feil underveis, vel og merke!). Hvis mengden med tall dobles og du antar at du alltid vil bruke like lang tid på hver sammenligning uansett hvor mange tall du har, vil arbeidstiden også dobles. Det kan f.eks. se slik ut:
+\newline \newline
+Du har tallene 2 3 1 7 5
+\newline \newline
+1. steg: Du sjekker tallet 2; 2 er nå kandidat til å være det største tallet.\\
+2. steg: Du sjekker tallet 3; 3 er nå kandidat til å være det største tallet.\\
+3. steg: Du sjekker tallet 1; 3 er fortsatt størst.\\
+4. steg: Du sjekker tallet 7; 7 er nå kandidat til å være det største tallet.\\
+5. steg: Du sjekker tallet 5; 7 er fortsatt størst.
+\newline \newline
+Nå som alle tallene er sjekket vet vi at 7 er det største tallet.
+\end{boxed}
+
+\noindent Kjøretider kan man finne ved å bruke iterasjon, rekursjonstre, variabelskifte, substitusjonsmetoden eller masterteoremet.
+
+\subsection{$\theta$, $O$ og $\Omega$-notasjon}
+Disse symbolene brukes for å sammenligne hvor fort forskjellige funksjoner vokser, og det er viktig at man blir kjent med bruken av dem.
+
+\subsubsection{$\theta$-notasjon}
+Denne notasjonen er den mest nøyaktige av de tre. Har du denne har du også de to andre. Her er $f(n)$ en funksjon som beskriver kjøretiden til en algoritme, hvor $n$ er størrelsen på inputen. $g(n)$ er et annet funksjonsuttrykk som vanligvis er enklere enn $f(n)$. Nå har vi at $\theta(g(n))$ defineres som følger:
+
+\begin{center}
+\textit{$\theta(g(n)) = \{ f(n)$: slik at det finnes positive konstanter $c_1$, $c_2$ og $n_0$ så vi har $0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ for alle $n_0 \leq n \}$}
+\end{center}
+
+\noindent Dette vil si at $f(n)$ blir skvist mellom to kurver som begge bare har en konstant forskjell, så lenge input-verdien $n$ er stor nok. Litt unøyaktig forklart betyr det at $f(n)$ vokser "omtrent like raskt som" $g(n)$.
+
+\begin{boxed}
+Anta at du vet at kjøretiden til en algoritme er gitt nøyaktig til å være $g(n) = \frac{1}{2}\ n^2 + 3n$. Da vil denne sies å ha kjøretid $\theta(n^2)$ fordi ved å velge $c_1$ mindre enn \(\frac{1}{2}\) og $c_2$ større enn \(\frac{1}{2}\) kan vi finne en eller annen stor nok $n$ slik at $c_1 n^2$ alltid er mindre enn \(\frac{1}{2}\)$n^2 + 3$ og $c_2 n^2$ alltid vil være større enn \(\frac{1}{2}\)$n^2 + 3$.
+\end{boxed}
+
+\begin{table}[H]
+    \caption{Eksempler}
+    \label{tab:kjoretideks}
+    \centering
+    \begin{tabular}{|L{5em} | L{35em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Kjøretid}} & \textbf{\textcolor{white}{Beskrivelse}}\\
+        \rowcolor[HTML]{E6E6E6}
+        $\theta(lg n)$ & Denne kalles logaritmisk kjøretid, og er fin-fin. Dette skjer blant annet hvis du kan halvere problemstørrelsen din ved å teste ett element. F.eks. kan du tenke deg at du vet at du har en \textbf{stigende tallfølge} og skal finne et bestemt tall. Da kan du sjekke det midterste. Hvis det er for lite, kan du se bort fra alle tallene i venstre halvdel, som du vet er mindre. Dermed har du allerede omtrent halvert problemstørrelsen din! Om tallet du ser på først er større, ser du bort fra alle tallene i høyre halvdel, som er større enn dette. Dersom tallet du leter etter eksisterer i tallfølgen, finner du det fort. Og hvorfor er kjøretiden $\theta(lg n)$? Jo, du starter med en rekkefølge med lengde $n$ som du halverer gang på gang helt til du er nede i lengde 1. Hvis antallet halveringer som trengs er $k$, har vi \(\frac{n}{2^k}\)$ = 1$. Løsningen av denne ligningen er $k = lg n$. Merk også at $lg 2n = lg 2 + lg n = 1 + lg n$ – en dobling av problemstørrelse gir kun et konstant tillegg til kjøretiden. \\
+        $\theta(n)$ & Dette er en polynomisk kjøretid. Hvis du har en input på størrelse $n$, og er nødt til å gå gjennom alle tallene én gang, har vi enkelt og greit $\theta(n)$.\\
+        \rowcolor[HTML]{E6E6E6}
+        $\theta(n^2)$ & Nok et eksempel på en polynomisk kjøretid. Gitt at du har en input på $n$. Det forekommer ofte at man må lete gjennom en matrise som har $n$ rader og $n$ kolonner. I dette tilfellet vil en dobling av input gi fire ganger så mange elementer å lete gjennom!\\
+        $\theta(2^n)$ & Her er vi inne på eksponentiell kjøretid. Denne er ikke morsom! Bare ett lite tillegg på input fra f.eks. en million til en million og én vil øke kjøretiden med det dobbelte. Dette kan forekomme ved at du for hvert element du tester, springer det ut to nye valg som du må teste.\\
+         \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{$O$-notasjon}
+Til forskjell fra $\theta$-notasjonen vil $O$-notasjonen kun ta for seg den øvre begrensningen til funksjonen:
+
+\begin{center}
+\textit{$O(g(n)) = \{ f(n)$: slik at det finnes positive konstanter $c$ og $n_0$ så vi har $0 \leq f(n) \leq cg(n)$ for alle $n_0 \leq n \}$}
+\end{center}
+
+\noindent Dette er ikke så ulikt $\thata$-notasjonen. $2n^2 + 100n$ er både $\theta(n^2)$ og $O(n^2)$. Men den er også $O(n^3)$, $O(n^4)$, $O(2^n)$ og alt som verre er. For hvis en eller annen konstant ganget med $n^2$ alltid vil være større enn kjøretiden, så gjelder det også alle andre funksjoner som vokser raskere enn det igjen. Altså, hvis du vet at kjøretiden til den kan også være $\theta(n*log(n))$ eller $\theta(n)$ eller $\theta(log(n))$. Derimot kan den ikke være verre, f.eks. $\theta(n^3)$.
+
+\subsubsection{$\Omega$-notasjon}
+
 \subsection{Noen vanlige kjøretider}
+Noen vanlige kjøretider er beskrevet i tabellen under. Sortert fra høyest til lavest.
+
+\begin{table}[H]
+    \caption{Kjøretider}
+    \label{tab:kjoretider}
+    \centering
+    \begin{tabular}{|L{15em} | L{15em}|L{15em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Kompleksitet}} & \textbf{\textcolor{white}{Navn}} & \textbf{\textcolor{white}{Type}}\\
+        \rowcolor[HTML]{E6E6E6}
+        $\theta(n!)$ & Factorial & Generell\\
+        $\Omega(k^n)$ & Eksponensiell & Generell\\
+        \rowcolor[HTML]{E6E6E6}
+        $O(n^k)$ & Polynomsik & Generell\\
+        $\theta(n^3)$ & Kubisk & Tilfelle av polynomisk\\
+        \rowcolor[HTML]{E6E6E6}
+        $\theta(n^2)$ & Kvadratisk & Tilfelle av polynomisk\\
+        $\theta(n log n)$ & Loglineær & Kombinasjon av lineær og logaritmisk\\
+        \rowcolor[HTML]{E6E6E6}
+        $\theta(n)$ & Lineær & Generell\\
+        $\theta(lg n)$ & Logaritmisk & Generell\\
+         \rowcolor[HTML]{E6E6E6}
+        $\theta(1)$ & Konstant & Generell\\
+         \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{Kjøretider}
+    \label{tab:kjoretider}
+    \centering
+    \begin{tabular}{|L{8em} | L{8em}|L{8em}| L{8em}|L{8em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Algoritme}} & \textbf{\textcolor{white}{Best-case}} & \textbf{\textcolor{white}{Average-case}} & \textbf{\textcolor{white}{Worst-case}} & \textbf{\textcolor{white}{Sammenligning}}\\
+        \rowcolor[HTML]{E6E6E6}
+        Bubblesort & $\theta(n)$ & $\theta(n^2)$ & $\theta(n^2)$ & Ja\\
+        Insertion sort & $\theta(n)$ & $\theta(n^2)$ & $\theta(n^2)$ & Ja\\
+        \rowcolor[HTML]{E6E6E6}
+        Selection sort & $\theta(n^2)$ & $\theta(n^2)$ & $\theta(n^2)$ & Ja\\
+        Heapsort & $O(n lg n)$ & $O(n lg n)$ & $O(n lg n)$ & Ja\\
+        \rowcolor[HTML]{E6E6E6}
+        Quicksort & $\theta(n lg n)$ & $\theta(n lg n)$ & $\theta(n^2)$ & Ja\\
+        Merge sort & $\theta(n lg n)$ & $\theta(n lg n)$ & $\theta(n lg n)$ & Ja\\
+        \rowcolor[HTML]{E6E6E6}
+        Counting sort & $\theta(n + k)$ & $\theta(n + k)$ & $\theta(n + k)$ & Nei\\
+         \hline
+    \end{tabular}
+\end{table}

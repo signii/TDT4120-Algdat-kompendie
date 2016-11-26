@@ -1,2 +1,31 @@
 \section{Innleding}
+\newenvironment{boxed}
+    {\begin{center}
+    \begin{tabular}{|p{0.9\textwidth}|}
+    \hline\\
+    }
+    { 
+    \\\\\hline
+    \end{tabular} 
+    \end{center}
+    }
 \subsection{Hva er algoritmer?}
+En algoritme er en hvilket som helst tydelig definert fremgangsmåte for beregninger som kan ta en verdi (eller en mengde verdier) som input og gir en verdi (eller en mengde verdier) som output. Man kan også se på det som et verktøy som skal løse et definert beregningsproblem. Når man definerer problemet, må man beskrive hvilket forhold man ønsker mellom input og output, for eksempel: “Input: Et veikart over en by og to punkter. Output: Den korteste veien (målt i meter) mellom de to punktene.”
+\\\\
+En algoritme er en veldefinert prosedyre som tar en verdi eller mengde verdier som input og produserer en verdi eller mengde med verdier som output. Dette er en sekvens som transformerer input til output.
+At en algoritme er in-place vil si at den opererer på input-dataen uten å måtte lage f.eks. nye arrays for å løse problemet.
+\\\\
+At en algoritme er stabil vil si at hvis du sorterer en liste med tall, vil alltid tallet i forekomsten som var først i den opprinnelige listen komme først i den sorterte listen.
+
+\subsubsection{Instans}
+Hver samling av input-verdier til et problem kalles en instans. For eksempel kan man i en instans av problemet over ha inputverdier som er et veikart over Trondheim, og de to punktene kan være to geografiske punkter som tilsvarer NTNU Gløshaugen og NTNU Dragvoll.
+
+\subsubsection{Problem}
+En oppgave generert på generell input. Et problem er en relasjon mellom input og output.
+
+\subsubsection{Probleminstans}
+Et problem med et bestemt input. 
+
+\subsubsection{Iterasjon}
+En gjennomkjøring av en gjentatt handling.
+

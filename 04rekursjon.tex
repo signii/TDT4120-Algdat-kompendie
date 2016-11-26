@@ -1,3 +1,35 @@
 \section{Rekursjon}
+Rekursjon går ut på å bruke samme funksjon flere ganger, med et subsett av opprinnelig input. De fleste algoritmer kan implementeres enter iterativt (et funksjonskall som løser problemet), eller rekursivt. Et godt eksempel på dette er fakultet. 
+
 \subsection{Masterteoremet}
+Motivasjonen for å lære seg masterteoremet er for å enkelt kunne løse rekurrenser. Ta for eksempel analysen av Mergesort. Hvis vi antar at den originale listen inneholder en 2’er-potens antall elementer vil vi for hvert kall til Mergesort få to nye metodekall med halve listen i hver, helt til antall elementer i listen er lik en. Det vil si at $T(n) = 2T(n/2)$ så lenge $|n| > 1$. 
+\\\\
+Hovedregelen: $T(N) = aT(n/b) + f(n)$   $a1\geq$, $b \geq 1$
+\\\\
+Denne typen rekurrenser oppstår gjerne i sammenheng med splitt-og-hersk algoritmer, f.eks. MERGE-SORT. Problemet deles opp i a deler av størrelse $n/b$, med $f(n)$ arbeid for å gjøre selve oppdelingen, og å sette sammen resultatet av rekursive kall etter at disse er ferdige. I eksempelet med MERGE-SORT er $f(n)$ arbeidet med å splitte listen i to underlisten, og å flette sammen de to sorterte listene etter at de rekursive kallene er ferdige. Det å splitte skjer i konstant tid $\theta(1)$, mens det å flette tar lineær tid $\theta(n)$. Vi kan altså sette $f(n) = n$. Siden vi til enhver tid deler listen opp i to deler, hver del $n/2$ er henholdsvis $a = 2$ og $b = 2$. For MERGE-SORT har vi altså: $T(n) = 2T(n/2) + n$
+\\\\
+Dersom vi ikke allerede visste kjøretiden til MERGE-SORT kunne vi funnet den ved å løse denne rekurrensen. Å løse rekurrensen kunne vi så brukt Masterteoremet til. Fremgangsmåten for Masterteoremet er som følger:
+\begin{enumerate}
+    \item Identifiser $a$, $b$, $f(n)$
+    \item Regn ut $log_b a$
+    \item Konsulter tabellen \ref{tab:masterteoremet}
+\end{enumerate}
+
+\begin{table}[H]
+    \caption{De tre tilfellene av masterteoremet}
+    \label{tab:masterteoremet}
+    \centering
+    \begin{tabular}{|L{5em} | L{18em}|L{18em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Tilfelle}} & \textbf{\textcolor{white}{Krav}} & \textbf{\textcolor{white}{Løsning}}\\
+        \rowcolor[HTML]{E6E6E6}
+        1 & $f(n) \in O(n^{log_b a-\varepsilon})$ & $T(n) \in \theta(n^{log_b a})$ \\
+        2 & $f(n) \in \theta(n^{log_b a} log^k n)$ & $T(n) \in \theta(n^{log_b a} log^{k + 1}n)$ \\
+        \rowcolor[HTML]{E6E6E6}
+        3 & $f(n) \in \Omega(n^{log_b a+\varepsilon})$ & $T(n) \in \theta(n)$ \\
+         \hline
+    \end{tabular}
+\end{table}
+
 \subsubsection{Eksempel}
