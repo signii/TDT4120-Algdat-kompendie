@@ -1,15 +1,85 @@
 \section{Sortering og søking}
 
 \subsection{Sortering}
+Sortering er en av de viktigste operasjonene man har, og det brukes også mye som en del av andre operasjoner. Tenk for eksempel hvis du spiller kortspillet bridge. Da får du utdelt 13 kort, og for å ha oversikt over hvor bra hånden din er sorterer du den etter farge og kortenes valør innad i hver farge.
 
 \subsubsection{Stabilitet}
 
 \subsubsection{Sammenligningsbaserte sorteringsalgoritmer}
+Dette er en av to grupper sortering. Felles i denne gruppen er at soteringen skjer ved sammenligning av to elementer. De fleste av disse metodene klarer seg med å jobbe direkte i den originale inputlisten (altså at de ikke trenger å opprette nye, midlertidige lister), og disse sies å være "in place" sorteringsalgoritmer.\\
+
+\noindent \textbf{Bubblesort}\\
+Dette kan sies å være den enkleste og mest naive av alle sorteringsalgoritmer. Bubblesort tester to og to naboelementer, og dersom den finner at det første elementet er større enn det neste bytter de plass. Effektiv på små datamengder. Denne algoritmen bruker sammenligning, og skjer "in place".
+
+\begin{figure}[H]
+\includegraphics[scale=0.5]{images/bubblesort}
+\centering %centering the image
+\caption{Bubblesort}
+\label{fig:bubblesort}
+\end{figure}
+
+\begin{lstlisting}
+    for i = 0 to A.length - 1 do
+    	for j = A.length downto i + 1 do
+		    if A[j] < A[j - 1] then
+		    	exchange A[j] with A[j - 1]
+		    end if
+	    end for
+    end for
+\end{lstlisting}
+
+\begin{boxed}
+Gitt tallfølgen 6, 5, 3, 1, 8, 7, 2 4. Vil sorteres slik at etter en runde vil rekken bli 5, 3, 1, 6, 7, 2, 4, 8. Neste runde vil den være: 3, 1, 5, 6, 2, 4, 7, 8. Så vil den bli: 1, 3, 5, 2, 4, 6, 7, 8. Deretter: 1, 3, 2, 4, 5, 6, 7, 8. Etter fem runder blir rekkefølgen: 1, 2, 3, 4, 5, 6, 7, 8.
+\end{boxed}
+
+\noindent Kjøretiden til Bubblesort er \textbf{$\theta(n^2$} for både gjennomsnittlig og verste tilfelle. Det er ikke så vanskelig å se for seg. Hvert eneste element kan risikere å måtte flytte seg opptil $n$ plasser under sorteringen. Boblesortering er effektiv på veldig små mengder.\\
+
+\noindent \textbf{Insertion sort}\\
+Denne sorteringen er nok den mest intuitive av dem alle, og foregår "in place". Den tar utgangspunkt i det første elementet, og sjekker så element nummer to. Deretter settes de slik at de er sortert i forhold til hverandre. Så tar den tredje element of ser hvor dette skal plasseres i forhold til de to første. Slik fortsetter det. Når $i - 1$ elementer er ferdig sortert og det $i$'te kommer, er det riktig plass i rekken for element nummer $i$ – etter at det er satt på plass, har vi $i$ sorterte elementer, og vi kan gå videre med element $i + 1$. Dette er den måten de aller fleste sorterer en korthånd på. Insertion sort er, i likhet med bubblesort, også meget effektiv på små datamengder. 
+\\\\
+Kjøretiden her er også \textbf{$\theta(n^2)$} både for gjennomsnittlig kjøretid og i verste tilfelle. Men i praksis er den ofte bedre en bubblesort. Et veldig viktig poeng er: hvis du har en hel del elementer som nesten er sortert ferdig, er denne metoden helt suveren (på slutten av quicksort f.eks.). 
+
+\begin{figure}[H]
+\includegraphics[scale=0.5]{images/insertionsort}
+\centering %centering the image
+\caption{Insertion sort}
+\label{fig:insertionsort}
+\end{figure}
+
+\begin{lstlisting}
+    for j = 0 to A.length do
+	    key = A[j]
+	    i = j - 1
+	    while i > 0 and A[i] > key do
+	    	A[i + 1] = A[1]
+	    	i = i - 1
+	    end while
+	    A[i] + 1 = key
+    end for
+\end{lstlisting}
+
+\begin{boxed}
+Gitt tallrekken 6, 5, 3, 1, 8, 7, 2, 4. Begynner med 6, som er første tall. Ser så på 5. 5 er mindre enn 6, og flyttes til plass null. Rekken ser da slik ut: 5, 6, 3, 1, 8, 7, 2, 4. Ser så på plass nummer to, tallet 3. Det er mindre enn både 5 og 6, og flyttes først. Tallrekken er da: 3, 5, 6, 1, 8, 7, 2, 4. Plass tre er 1. Det er minst av alle, og settes ført. Da er tallrekken: 1, 3, 5, 6, 8, 7, 2, 4. Plass nummer fire er tallet 8. Det er større enn alle tidligere tall, og blir stående. Plass fem er 7. Det er mindre enn 8 og flyttes til plass fire: 1, 3, 5, 6, 7, 8, 2, 4. Plass seks er 2, som er mindre enn nesten alle. Flyttes til plass en, og tallrekken blir: 1, 2, 3, 5, 6, 7, 8, 4. Da er det bare 4 igjen, som er mindre enn mange av tallene, og plasseres rett i plass tre. Da er tallfølgen ferdig sortert: 1, 2, 3, 4, 5, 6, 7, 8.
+\end{boxed}
 
 \noindent \textbf{Merge sort}\\
-Merge-sort deler listen i to helt til den har en stor samling med lister som har bare ett element. Dermed har man en samling av sorterte lister. Disse slås så sammen ved å sammenligne det første elementet i to lister. Den minste legges fremst i en ny liste, og fjernes fra den opprinnelige listen. Dette gjøres for hver liste rekursivt, som til slutt gir en sortert liste med alle elementene.
+Nå kommer en sortering som er bedre enn de to foregående (så sant størrelsen på inn-data ike er meget liten!). I flettesortering deles problemet opp i stadig mindre biter, og når bitene er tilstrekkelig små, er det lett å sortere dem hver for seg.
 \\\\
-Merge-sort er en “splitt-og-hersk” algoritme. Merge-sort er effektiv. Deler opp problemet i stadig mindre biter, og når bitene er små nok flettes de sammen i sortert rekkefølge.
+Tenk for eksempel at du deler input-verdiene i to like deler (om du har et oddetall av elementer, vil den ene delen bare bli en større en den andre). Deretter fortsetter du, med hver del for seg, til du har kun to eller tre verdier i hver lille del. Disse er lette å sortere (f.eks. ved å bruke metoden til boblesortering!) hver for seg. Når dette er gjort, tar man for seg to og to deler. Disse flettes sammen ganske enkelt ved å se på den minste verdien i hver av de to nye delene/bunkene, og skille ut den minste av dem. Så gjentar man prosedyren med de elementene som er igjen og ender med en større del sorterte elementer. Slik fortsetter det til alt er sortert.
+\\\\
+Altså, man splitter opp problemet, ordner og fikser litt, og samler sammen alt igjen. Denne fremgangsmåten kalles også \textit{splitt og hersk}.
+
+\begin{boxed}
+Anta at du har tallene 8 3 9 13 12 2 14 10 5
+\newline \newline
+1. steg: Del tallene rundt midten:  \hfill 8 3 9 13 – 12 2 14 10 5\\
+2. steg: Fortsett i samme dur:  \hfill 8 3 – 9 13 – 12 2 – 14 10 5\\
+3. steg: Nå sorterer vi hver lille delmengde og får:   \hfill 3 8 – 9 13 – 2 12 – 5 10 14\\
+4. steg: Fletter så sammen to og to delmengder: \hfill 3 8 9 13 – 2 5 10 12 14\\
+5. steg: Etter siste fletting er alle tallene sortert!    \hfill 2 3 5 8 9 10 12 13 14
+\end{boxed}
+
+\noindent Kjøretiden til flettesortering er \textbf{$\theta(n*log(n))$} i gjennomsnittlig verste kjøretid. Logaritmen kommer inn i bildet når du deler opp problemet. Vi forklarer dette intuitivt. For et dobbelt så stort antall input-elementer trenger du kun dele en eneste gang i to deler, alik at de to delene hver for seg tar like lang tid som for den opprinnelige mengden av problemer. Slik vil du kun trenge en ekstra deling av problemet når det blir dobbelt så stort. Multiplikasjonen med $n$ kommer av at når du skal flette sammen de to siste delene, må du sjekke alle elementene en gang mot et annet.
 
 \begin{lstlisting}
     function MERGE-SORT(A,p,r)
@@ -50,7 +120,7 @@ Merge-sort er en “splitt-og-hersk” algoritme. Merge-sort er effektiv. Deler 
         end function
 \end{lstlisting}
 
-\noindent \textbf{Eksempel}\\
+\begin{boxed}
 Gitt tallfølgen 6, 5, 3, 1, 8, 7, 2, 4. Tallene deles opp i to grupper, 6, 5, 3, 1 og 8, 7, 2, 4. Disse deles så opp i to igjen; 6, 5 og 3, 1 og 8, 7 og 2, 4. Disse deles så opp i ett og ett tall. Sorteres så etter rekkefølge innad i toergruppene. Har da; 5, 6 og 1, 3 og 7, 8 og 2, 4. Slår så sammen to og to grupper til to grupper på fire, sortert: 1, 3, 5, 6 og 2, 4, 7, 8. Slår til slutt sammen de to firergruppene, sortert: 1, 2, 3, 4, 5, 6, 7, 8.
 
 \begin{figure}[H]
@@ -59,9 +129,79 @@ Gitt tallfølgen 6, 5, 3, 1, 8, 7, 2, 4. Tallene deles opp i to grupper, 6, 5, 3
 \caption{Merge sort}
 \label{fig:mergesort}
 \end{figure}
+\end{boxed}
+
+\noindent \textbf{Heapsort}\\
+Her benytter vi oss igjen av deling av problemet slik at vi oppnår en god kjøretid. Heapsort er nok et eksempel på en sortering "in place".
+\\\\
+1. steg er bygging av heap. Dette består av å lage en såkalt "haug" av elementene først. En haug (eller en "heap") er et eksempel på en datastruktur. Det foregår slik at du setter elementene i et tre slik at ethvert element er det største av alle som er under det. Se figur \ref{fig:heapsort}. Dette innebærer blant annet at det øverste elementet er det største av alle de som er der. Algoritmen for å bygge opp en heap av en usortert liste med tall er nærmere forklart i kapittel 6.2 og 6.3 i Cormen, og går i korthet ut på at vi går gjennom alle indre noder og dytter dem nedover så langt som nødvendig. Noe som også lønner seg å få med seg fra boken er hvordan man kan lagre en heap direkte i et array i stedet for å lage en vanlig trestruktur.
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/heapsort}
+\centering %centering the image
+\caption{Heapsort}
+\label{fig:heapsort}
+\end{figure}
+
+\noindent 2. steg er å sortere. Når haugen først er ferdig, går det fort å sortere. Bare plukk ut det øverste elementet i haugen, som er det største av samtlige. Deretter går der fort å ordne de resterende elementene i haugen igjen for deretter å plukke ut det største av dem igjen.
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/heapsort2}
+\centering %centering the image
+\caption{Heapsortsortering}
+\label{fig:heapsort2}
+\end{figure}
+
+\noindent Kjøretiden her er også \textbf{$\theta(n * log(n))$}. Det som er så fint med denne metoden er prinsippet med haugen. Dette kommer frem om du har med en \textbf{prioritetskø} å gjøre.
+
+\begin{lstlisting}
+    BUILDMAXHEAP(A)
+        for i = A.length downto 2 do
+	        exchange A[1] with A[i]
+	        A.heapSize = A.heapSize - 1
+	        MAX-HEAPIFY(A,1)
+        end for
+\end{lstlisting}
 
 \noindent \textbf{Quicksort}\\
-Quicksort er enda en “splitt-og-hersk”-algoritme. Man starter gjerne Quicksort ved å randomisere listen. Den starter med å velge et pivotelement. Den deler deretter listen i to partisjoner: en med elementene som er mindre eller lik pivoten, og en med elementene som er større enn pivot. Deretter kaller den seg selv rekursivt på de to partisjonene. Deretter fletter man sammen de to partisjonene.
+Quicksort er en av de desidert mest populære sorteringene i bruk. Den bruker, som flettesortering, en form for \textit{splitt og hersk}-metode. Denne algoritmen kan deles i tre trinn:
+\\\\
+\textit{Partisjonér:} Velg ut et element i mengden du vil sortere. La oss kalle dette \textbf{pivotelementet} for $a$. Så deler vi mengden i to mindre mengder slik at alle elementer mindre eller lik $a$ danner den ene mengden, mens resten (som da er større enn $a$) danner den andre mengden.
+
+\begin{boxed}
+Anta at du har tallene 2 8 7 1 3 6 4
+\newline \newline
+Vi velger nå pivotlementet $a$ til å være det siste tallet 4. Tall som tilhører 1. partisjon, altså som er mindre eller lik $a$, understreker vi. De tallene som hører til 2. partisjon, overstreker vi. Algoritmen for splitting blir som følger:
+\\\\
+2 > 4, 2 tilhører 1. partisjon:\hfill \underline{2} 8 7 1 3 6 4\\
+
+8 > 4, 8 tilhører 2. partisjon:\hfill \underline{2} $\overline{8}$ 7 1 3 6 4\\
+
+7 > 4, 7 tilhører 2. partisjon:\hfill \underline{2} $\overline{8}$ $\overline{7}$ 1 3 6 4\\
+
+1 < 4, 1 tilhører 1. partisjon:  1 bytter med 8\hfill \underline{2} \underline{1} $\overline{7}$ $\overline{8}$ 3 6 4\\
+
+3 < 4, 3 tilhører 1. partisjon: 3 bytter med 7\hfill \underline{2} \underline{1} \underline{3} $\overline{8}$ $\overline{7}$ 6 4\\
+
+6 > 4, 6 tilhører 2. partisjon:\hfill \underline{2} \underline{1} \underline{3} $\overline{8}$ $\overline{7}$ $\overline{6}$ 4
+\newline\newline
+Pivotelementet finner sin plass (4 bytter med 8), så partisjonen gir:
+\begin{center}
+2 1 3 4 7 6 8
+\end{center}
+\end{boxed}
+
+\noindent Det finnes også andre måter å splitte på enn den i eksempelet.
+\\\\
+\textit{Hersk:} De to delmengdene sorteres ved å bruke quicksort igjen på hver av de to delene. Det er delle som kalles å gjøre et \textbf{rekursivt kall}.
+\\\\
+\textit{Kombinér:} Sett sammen delmengdene når du er ferdig med alle rekursive kall. Dette er lett, da Quicksort sorterer "in place".
+\\\\
+Dette kan virke greit, men hvordan velger man $a$, og når skal man avslutte de rekursive kallene? For å velge $a$, kan man ganske enkelt bare bruke den første verdien man har tilgjengelig. F.eks. om man har en liste med tall, bruker man det øverste tallet. Dette kan gå fint, men om tallmengden nesten er ferdig sortert vil denne metoden få en veldig stor kjøretid.
+\\\\
+Det er også et poeng at man ikke trenger å splitte helt til alle delmengdene bare består av ett enkelt element. På små datamengder er ikke Quicksort så veldig effektiv. Derfor er det ofte slik at når en delmengde har under et visst antall element, så sorterer man delmengden med en annen metode. Det er vanlig å sette grensen litt under 10, og så bruke sortering ved innsetting. Det samme gjelder mergesort.
+\\\\
+Gitt at vi klarer å velge elementet $a$ slik at den deler mengden i to nesten helt like store deler, vil Quicksort ha en kjøretid på \textbf{$\theta(n * log(n))$}. Dersom man kan velge $a$ helt tilfeldig vil den gjennomsnittlige kjøretiden være \textbf{$\theta(n * log(n))$}, mens verste tilfelle er $\theta(n^2)$. Derfor er det viktig å få randomisert når vi skal plukke ut $a$. Quicksort er raskere enn flettesortering og haugsortering selv om de to har både gjennomsnittlig og verste kjøretid på $\theta(n * log(n)$. Grunnen til det er at Quicksort har et veldig lite konstantledd.
 
 \begin{lstlisting}
     function QUICKSORT(A,p,r)
@@ -88,60 +228,37 @@ Quicksort er enda en “splitt-og-hersk”-algoritme. Man starter gjerne Quickso
     end function
 \end{lstlisting}
 
-\noindent \textbf{Bubblesort}\\
-Bubblesort tester to og to naboelementer. Dersom den første er større bytter de plass. Effektiv på små datamengder. Denne algoritmen bruker sammenligning.
-
-\begin{lstlisting}
-    for i = 0 to A.length - 1 do
-    	for j = A.length downto i + 1 do
-		    if A[j] < A[j - 1] then
-		    	exchange A[j] with A[j - 1]
-		    end if
-	    end for
-    end for
-\end{lstlisting}
-
-\noindent \textbf{Eksempel}\\
-Gitt tallfølgen 6, 5, 3, 1, 8, 7, 2 4. Vil sorteres slik at etter en runde vil rekken bli 5, 3, 1, 6, 7, 2, 4, 8. Neste runde vil den være: 3, 1, 5, 6, 2, 4, 7, 8. Så vil den bli: 1, 3, 5, 2, 4, 6, 7, 8. Deretter: 1, 3, 2, 4, 5, 6, 7, 8. Etter fem runder blir rekkefølgen: 1, 2, 3, 4, 5, 6, 7, 8.\\
-
-\noindent \textbf{Insertion sort}\\
-Insertion-sort minner litt om selection-sort. Man tar det første usorterte elementet $x$, og sammenligner det med de sorterte elementene. Hvis man når et element som er mindre enn $x$ stopper man man gjennomgangen, og tar for seg neste $x$. Dette fungerer på samme måte som de fleste sorterer en korthånd.
-\\\\
-Insertion-sort er en enkel sorteringsalgoritme. Den tar de to første elementene og plasserer i forhold til hverandre. Deretter plasserer den det neste i forhold til de to forrige, osv. Veldig effektiv å bruke på små mengder. Kan f.eks. brukes i slutten på en Quick-sort algoritme.
-
-\begin{lstlisting}
-    for j = 0 to A.length do
-	    key = A[j]
-	    i = j - 1
-	    while i > 0 and A[i] > key do
-	    	A[i + 1] = A[1]
-	    	i = i - 1
-	    end while
-	    A[i] + 1 = key
-    end for
-\end{lstlisting}
-
-\noindent \textbf{Eksempel}\\
-Gitt tallrekken 6, 5, 3, 1, 8, 7, 2, 4. Begynner med 6, som er første tall. Ser så på 5. 5 er mindre enn 6, og flyttes til plass null. Rekken ser da slik ut: 5, 6, 3, 1, 8, 7, 2, 4. Ser så på plass nummer to, tallet 3. Det er mindre enn både 5 og 6, og flyttes først. Tallrekken er da: 3, 5, 6, 1, 8, 7, 2, 4. Plass tre er 1. Det er minst av alle, og settes ført. Da er tallrekken: 1, 3, 5, 6, 8, 7, 2, 4. Plass nummer fire er tallet 8. Det er større enn alle tidligere tall, og blir stående. Plass fem er 7. Det er mindre enn 8 og flyttes til plass fire: 1, 3, 5, 6, 7, 8, 2, 4. Plass seks er 2, som er mindre enn nesten alle. Flyttes til plass en, og tallrekken blir: 1, 2, 3, 5, 6, 7, 8, 4. Da er det bare 4 igjen, som er mindre enn mange av tallene, og plasseres rett i plass tre. Da er tallfølgen ferdig sortert: 1, 2, 3, 4, 5, 6, 7, 8.\\
-
-\noindent \textbf{Selection sort}\\
-
-\subsubsection{Andre sorteringsalgoritmer}
-
-\noindent \textbf{Heapsort}\\
-Heapsort benytter seg av en heap som datastruktur. Lager en heap av alle elementene slik at hver node sine barn er mindre enn den selv. Det øverste elementet er alltid det største. Deretter plukkes det øverste elementet ut, for så å sortere heapen igjen, og ta ut det øverste elementet igjen. Fortsetter til heapen er tom.
-
-\begin{lstlisting}
-    BUILDMAXHEAP(A)
-        for i = A.length downto 2 do
-	        exchange A[1] with A[i]
-	        A.heapSize = A.heapSize - 1
-	        MAX-HEAPIFY(A,1)
-        end for
-\end{lstlisting}
+\subsubsection{Sortering i lineær tid}
+Hvis man kjenner til en del egenskaper ved mengden man skal sortere på forhånd kan man senke kjøretiden betraktelig.\\
 
 \noindent \textbf{Counting sort}\\
-Counting-sort tar et heltall $N$ mellom $0$ og $k$. Lager en liste med verdier fra $0$ til $k$ og setter inn tallene på sin plass i listen. Fungerer best når verdiene på tallene som sorteres ligger tett etterhverandre og $k$ ikke er for høy.
+Anta at vi har en mengde men $n$ heltall med verdier fra 0 til $k$. Da kan vi rett og slett lage oss en liste fra 0 til $k$, og så setter vi hvert element inn på sin plass i listen. Sorteringen faller dermed ut av seg selv.
+
+\begin{boxed}
+Anta at vi har tretten tall mellom 1 og 9.
+\begin{center}
+3 9 8 9 4 1 5 4 7 8 2 4 7
+\end{center}
+Vi lager så en tabell hvor vi teller opp hvor mange vi har av hvert tall.
+
+\begin{table}[H]
+    \label{tab:tellesortering}
+    \centering
+    \begin{tabular}{|L{10em} | L{2em}|L{2em}|L{2em}|L{2em}|L{2em}|L{2em}|L{2em}|L{2em}|L{2em}|}
+        \hline
+        De mulige tall & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+        \hline
+        Antall av hvert tall & 1 & 1 & 1 & 3 & 1 & 0 & 2 & 2 & 2\\
+         \hline
+    \end{tabular}
+\end{table}
+Nå er det bare å hente ut den sorterte tallfølgen. Den blir da enkelt som følger:
+\begin{center}
+1 2 3 4 4 4 5 7 7 8 8 9 9
+\end{center}
+\end{boxed}
+
+\noindent Kjøretiden til tellesortering avhenger av verdien til $k$. Hvis den ikke øker for mye i forhold til størrelsen, nærmere bestemt $k = O(n)$, så blir kjøretiden $\theta(k + n)$. Om du vet at alle (hel)tallene ligger i et bestemt område, f.eks. mellom 1 og 10, så er det tellesortering som er tingen. For om $k$ er konstant, så blir kjøretiden $\theta(n)$. Hvert element sjekkes for sin verdi én gang og settes i bås. Fungerer best når verdiene på tallene som sorteres ligger tett etterhverandre og $k$ ikke er for høy.
 
 \begin{lstlisting}
     function COUNTINGSORT(A,B,k)
@@ -164,12 +281,17 @@ Counting-sort tar et heltall $N$ mellom $0$ og $k$. Lager en liste med verdier f
 
 \noindent Har kjøretid $O(n)$ i verste tilfelle, dersom $k = O(n)$ og $d = O(1)$.\\
 
-\noindent \textbf{Eksempel}\\
+\begin{boxed}
 Gitt A = [3, 3, 1, 4, 4, 3, 1, 2, 3, 5]. Hvordan ser C[0...6] ut idet Counting-Sort(A, B, 6) returnerer?
-\\\\
-[0, 0, 2, 3, 7, 9, 10] Tellesortering teller først forekomster, gjør så tellingene kumulative, og så dekrementerer disse under innsetting. Så tellingene til slutt tilsvarer altså hvor mange som er strengt mindre. F.eks. vil C[3] hvor mange verdier som er mindre enn 3. Her gis også enkelte andre svar noe uttelling. \\
+\newline\newline
+[0, 0, 2, 3, 7, 9, 10] \newline\newline  Tellesortering teller først forekomster, gjør så tellingene kumulative, og så dekrementerer disse under innsetting. Så tellingene til slutt tilsvarer altså hvor mange som er strengt mindre. F.eks. vil C[3] hvor mange verdier som er mindre enn 3. Her gis også enkelte andre svar noe uttelling.
+\end{boxed}
 
 \noindent \textbf{Radix sort}\\
+Når man skal sortere en mengde heltall (f.eks. i det vanlige titallsystemet) kan det være et smart triks å først sortere etter det mest signifikante sifferet (altså sifferet lengst til venstre), deretter det nest mest signifikante osv. til man er i mål. Det som ikke er så gunstig med dette er at når man er ferdig med å sortere på det første sifferet har man fått ti grupper som må sorteres videre hver for seg. Etter at hver av disse er sortert på det andre sifferet har man hundre grupper, og dette er det strevsomt å holde styr på.
+\\\\
+Radix-sortering bruker en lignende idé som er enda smartere. Du vil se at hvis man først sorterer etter det minst signifikante sifferet, vil man få sortert alle tallene uten det lille problemet som oppstår ve då ta fatt i det mest signifikante sifferet. For at dette skal fungere er det meget viktig at man bruker en stabil sorteringsalgoritme for å sortere på hvert siffer. Grunnen til dette er at når man sorterer på f.eks. sifferet nest lengst til høyre og støter på to tall med samme siffer på den plassen vil de to tallene beholde den innbyrdes rekkefølgen de hadde. %FORTSETT HER!!
+
 Radix-sort sorterer tall i et gitt tallsystem (her titallsystemet) etter minste signifikante siffer.
 
 \begin{lstlisting}
@@ -179,6 +301,14 @@ Radix-sort sorterer tall i et gitt tallsystem (her titallsystemet) etter minste 
     	end for
     end function
 \end{lstlisting}
+
+\noindent \textbf{Selection sort}\\
+
+
+
+
+
+
 
 \noindent \textbf{Bucketsort}\\
 Veldig lik Counting-sort, men bruker såkalte “bøtter” man putter tallene i. For eksempel [5,6) betyr at verdier større eller lik 5, men mindre enn 4 skal i bøtten.

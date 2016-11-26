@@ -23,7 +23,11 @@ Nå som alle tallene er sjekket vet vi at 7 er det største tallet.
 \noindent Kjøretider kan man finne ved å bruke iterasjon, rekursjonstre, variabelskifte, substitusjonsmetoden eller masterteoremet.
 
 \subsection{$\theta$, $O$ og $\Omega$-notasjon}
-Disse symbolene brukes for å sammenligne hvor fort forskjellige funksjoner vokser, og det er viktig at man blir kjent med bruken av dem.
+Disse symbolene brukes for å sammenligne hvor fort forskjellige funksjoner vokser, og det er viktig at man blir kjent med bruken av dem. Noen ganger brukes $\theta$ og $O$-notasjonen om hverandre. Men hvis du har at en algoritme har en kjøretid på $O(n^2)$ mens den kanskje er $\theta(n)$ så er det jo riktig, selv om det jo er kjekt å vite at den er enda raskere enn det $\theta(n^2)$ er.
+\\\\
+I praksis brukes $\theta$-notasjon når det er et fast antall elementer du må undersøke hver gang. Det vil si at det er ikke snakk om å ha flaks eller uflaks med tallene. Noen ganger snakker vi om "worst case", "average case" og "best case" og bruker denne notasjonen i disse forskjellige tilfellene. Da må du ikke la deg lure til å tro at notasjonen gjelder kjøretiden til algoritmen generelt.
+\\\\
+$O$ brukes ofte om worst case og $\Omega$ om best case, men disse er ikke knyttet fast sammen. $O$, $\Omega$ og $\theta$ beskriver \textit{funksjoner}, uavhengig av hva det er disse funksjonene beskriver. Det er ikke noe i veien for f.eks. å si at worst case for en viss algoritme er $\Omega(n lg n)$, selv om dét sjelden er særlig nyttig. Det man ofte gjør, er følgende: sett at man har funnet ut at en algoritmes kjøretid er $\theta(n)$ i best case og $\theta(n^2)$ i worst case; da kan man si at kjøretiden generelt er $\Omega(n)$ og $\O(n^2)$.
 
 \subsubsection{$\theta$-notasjon}
 Denne notasjonen er den mest nøyaktige av de tre. Har du denne har du også de to andre. Her er $f(n)$ en funksjon som beskriver kjøretiden til en algoritme, hvor $n$ er størrelsen på inputen. $g(n)$ er et annet funksjonsuttrykk som vanligvis er enklere enn $f(n)$. Nå har vi at $\theta(g(n))$ defineres som følger:
@@ -66,6 +70,13 @@ Til forskjell fra $\theta$-notasjonen vil $O$-notasjonen kun ta for seg den øvr
 \noindent Dette er ikke så ulikt $\thata$-notasjonen. $2n^2 + 100n$ er både $\theta(n^2)$ og $O(n^2)$. Men den er også $O(n^3)$, $O(n^4)$, $O(2^n)$ og alt som verre er. For hvis en eller annen konstant ganget med $n^2$ alltid vil være større enn kjøretiden, så gjelder det også alle andre funksjoner som vokser raskere enn det igjen. Altså, hvis du vet at kjøretiden til den kan også være $\theta(n*log(n))$ eller $\theta(n)$ eller $\theta(log(n))$. Derimot kan den ikke være verre, f.eks. $\theta(n^3)$.
 
 \subsubsection{$\Omega$-notasjon}
+Der $O$-notasjonen ga en øvre begrensning for hvor raskt en fuksjon kan vokse, gir $\Omega$-notasjon en nedre begrensning. Derfor brukes ikke $\Omega$ så veldig ofte, for den vil aldri kunne gi en maksgrense for hvor lang tid en algoritme vil bruke, bare en minimumsgrense. Hvis du f.eks. viser at en algoritme har en kjøretid på $\Omega(n)$, så kan det godt hende at den egentlige kjøretiden er $2^n$, som er fryktelig dårlig. Det er omtrent som å si "jeg vil bruke minst ett minutt på å løse denne oppgaven" – da har du dine ord i behold hvis du bruker et helt år. Den formelle definisjonen av $\Omega$ er som følger:
+
+\begin{center}
+\textit{$\Omega(g(n)) = \{ f(n)$: slik at det finnes positive konstanter $c$ og $n_0$ så vi har $0 \leq cg(n) \leq f(n)$ for alle $n_0 \leq n \}$}
+\end{center}
+
+\noindent Kombinerer vi definisjonene av $O$ og $\Omega$ får vi definisjonen av $\theta$. Dette gjelder andre veien også: dersom du vet at $f(n) = O(g(n))$ og $f(n) = \Omega(g(n))$, vet du at $f(n) = \theta(g(n))$.
 
 \subsection{Noen vanlige kjøretider}
 Noen vanlige kjøretider er beskrevet i tabellen under. Sortert fra høyest til lavest.
@@ -118,3 +129,77 @@ Noen vanlige kjøretider er beskrevet i tabellen under. Sortert fra høyest til 
          \hline
     \end{tabular}
 \end{table}
+
+\subsection{Kjøretiden til rekurrensligninger}
+En rekurrensligning er en ligning som beskriver en funksjon ved dens verdi for mindre inn-verdier. 
+
+\begin{boxed}
+Fibonacci-tallene kan defineres som:
+\begin{center}
+$f(0) = f(1) = 1$\\
+$f(n) = f(n-1) + f(n-2)$
+\end{center}
+\noindent For å finne det $n$-te Fibonacci-tallet må man altså kjenne de to foregående tallene. De fem første tallene blir 1 1 2 3 5.
+\end{boxed}
+
+\noindent Selv om Fibonacci-tallene kan løses som rekurrensligning, vil dette bli en eksponentiell kjøretid. Heldigvis finnes det langt smartere måter å løse denne på enn ved rekursjon.
+\\\\
+Det er i hovedsak tre metoder som brukes for å finne kjøretiden til rekurrensligninger; substitusjonsmetoden, rekurrenstre, og mastermetoden.
+
+\subsubsection{Substitusjonsmetoden}
+Denne metoden løser rekurrensligninger gjennom to steg:
+\begin{enumerate}
+    \item Gjett på en løsning
+    \item Bruk \textbf{matematisk induksjon} til å verifisere eller forkaste den mulige løsningen.
+\end{enumerate}
+
+\noindent Det kan virke vanskelig å gjette på riktig løsning, men dette er faktisk ikke så veldig stort problem. Med litt trening ser man sånn omtrent hvor den vil ligge hen. Og mulighetene er egentlig ikke så veldig mange. Det blir som regel $\theta$ av $n$, $n^2$ eller $n^3$, eventuelt multiplisert med $log(n)$.
+
+\begin{boxed}
+Anta at rekurrensen er beskrevet ved:
+\begin{center}
+$T(n) = 2T(\lfloor n/2 \rfloor)+\(\frac{1}{2}\)n$  $\lfloor$ ... $\rfloor$ betyr å runde ned til nærmeste heltall
+\end{center}
+\noindent Vi kan da gjette på at løsningen er $O(n * log(n))$. Det vi da må vise, er at $T(n) \leq c * n * log(n)$ for en eller annen konstant $c > 0$. Ved å sette inn dette forslaget, vil man finne ut at for $c \geq 1$ fungerer det. Hadde vi mislykkes, måtte vi ha prøvd med en dårligere kjøretid. Og dessuten må man finne ut om det ikke finnes enda bedre kjøretider. 
+\end{boxed}
+
+\subsubsection{Rekurrenstre}
+Om du fortsatt ikke liker tanken på å gjette i vildens sky kommer rekurrenstremetoden som kallet. I rekurrenstreet vil hver node representere kostnaden av et enkelt underproblem. Vi summerer kostnadene på hvert nivå av treet for å finne kostnaden per nivå, og deretter summerer vi alle kostnadene per nivå for å finne total kostnad til alle nivåene. Dette høres kanskje komplisert ut med er ganske greit. Lager man treet svært nøye, kan det holde som et bevis i seg selv. Eller man kan finne noen tall og se hva slags \textbf{asymptotisk oppførsel} de har, for deretter å verifisere gjettingen ved substitusjonsmetoden.
+
+\begin{boxed}
+Rekurrenstreet til $T(n) = 3T(n/2) + cn^3$ er vist i figur \ref{fig:rekurrenstre} under. Vi ser at arbeidet i første nivå er $cn^3$, det samlede arbeidet i andre nivå er $3c$\(\frac{n^3}{2}\) osv. Vi regner med at rekursjonen stopper når argumentet til funksjonen er blitt 1. Siden argumentet starter på $n$ og halveres i hvert nivå, vil treet he $lg n$ nivåer. Samlet kjøretid blir da $\Sigma_{1=0}^{lg n} 3^i (\frac{n}{2^i}\))^3$.
+
+\begin{figure}[H]
+\includegraphics[scale=0.5]{images/rekurrenstre}
+\centering %centering the image
+\caption{Rekurrenstre}
+\label{fig:rekurrenstre}
+\end{figure}
+
+\noindent Se Cormen side 64.
+\end{boxed}
+
+\subsubsection{Master-metoden}
+Selve kokebokmetoden. Hvis du har en rekurrensligning på formen:
+\begin{center}
+$T(n) = aT(n/b) + f(n)$
+\end{center}
+\noindent Hvor $a \geq 1$ og $b > 1$ er konstanter og $f(n)$ er en asymptotisk, positiv funksjon, så er det bare å bruke masterteoremt rett fram. Se side 73 i Cormen. I korte trekk sier den at om du lar $n/b$ bety enten $\lfloor n/b \rfloor$ eller $\lceil n/b \rceil$ så har du:
+
+\begin{enumerate}
+    \item Hvis $f(n) = O(n^{log_b a-\epsilon})$ for en konstant $\epsilon > 0$, \Rightarrow $T(n) = \theta(n^{log_b a})$
+    \item Hvis $f(n) = \theta(n^{log_b a})$, \Rightarrow $T(n) = \theta(n^{log_b a} * log(n))$
+    \item Hvis $f(n) = \Omega(n^{log_b a+\epsilon})$ og hvis $a f (n/b) \leq c f (n)$ for en konstant $c > 1$ og $n$ stor nok, \Rightarrow $T(n) = \theta(f(n))$
+\end{enumerate}
+
+\begin{boxed}
+Anta at du har:
+\begin{center}
+$T(n) = 9T(n/3) + n$
+\end{center}
+\noindent Her er $a = 9$, $b = 3$ og $f(n) = n$. Vi ser at:
+\begin{center}
+$n^{log_3 9} = n^2 = \theta(n^2)$
+\end{center}
+\noindent Siden $f(n) = O(n^{log_3 9-\epsilon}$ med $\epsilon = 1$, så gir første del av masterteoremet at $T(n) = \theta(n^2)$.
+\end{boxed}
