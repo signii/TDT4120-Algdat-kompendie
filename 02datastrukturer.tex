@@ -1,7 +1,14 @@
 \section{Datastrukturer}
 
 \subsection{Lenkede lister}
-En lenket liste er en enkel datastruktur hvor objektene er ordnet lineært. Hvert objekt har helst to peker-variabler; \textit{next} og \textit{prev}. Har den begge disse peker-variablene er det en dobbelt lenket liste. Ved kun en peker (\textit{next}) er det en enkelt-lenket liste. Hvert element peker til det neste i rekkefølgen.
+En lenket liste er en enkel datastruktur hvor objektene er ordnet lineært. Hvert objekt har helst to peker-variabler; \textit{next} og \textit{prev}. Har den begge disse peker-variablene er det en dobbelt lenket liste. Ved kun en peker (\textit{next}) er det en enkelt-lenket liste. Hvert element peker til det neste i rekkefølgen. Man kan også ha dobbeltlenkede lister, der hver node inneholder en verdi og peker til både forrige og neste node.
+\\\\
+Vi har forskjellige varianter av lenkede lister, totalt åtte kombinasjoner:
+\begin{itemize}
+    \item enkle eller doble
+    \item sorterte eller usorterte
+    \item sirkulære (siste og første element er koblet sammen) eller ikke-sirkulære
+\end{itemize}
 
 \begin{lstlisting}
     class Node:
@@ -19,15 +26,14 @@ En lenket liste er en enkel datastruktur hvor objektene er ordnet lineært. Hver
     n2.next = n3
 \end{lstlisting}
 
-\noindent Man kan også ha dobbeltlenkede lister, der hver node inneholder en verdi og peker til både forrige og neste node.
-
 \subsubsection{Kjøretider}
 
 
 \subsection{Abstrakte datastrukturer}
+Forkortes ADT.
 
 \subsubsection{Kø}
-Kø er en FIFO; first in, first out. En kø implementeres som oftest som et array (gjerne et dynamisk array, likt Java sin ArrayList). En kø har egenskapene ENQUEUE og DEQUEUE. 
+Kø er en \textbf{FIFO}; first in, first out. En kø implementeres som oftest som et array (gjerne et dynamisk array, likt Java sin ArrayList), men kan også implementeres som en lenket liste. En kø har egenskapene ENQUEUE og DEQUEUE. Det er ingen sniking i en kø, og elementer vil komme ut av køen i samme rekkefølge som de ble lagt inn. Elementer kan legges inn bakerst i køen til enhver tid og man kan når som helst hente ut det første elementet, med mindre køen er tom.
 
 \begin{figure}[H]
 \includegraphics[scale=0.7]{images/ko}
@@ -39,7 +45,7 @@ Kø er en FIFO; first in, first out. En kø implementeres som oftest som et arra
 \noindent En kø er en abstrakt datastruktur som bevarer de innsatte elementers rekkefølge. Enqueue er innsettingsoperasjonen, som setter inn et element på slutten av køen. Dequeue er uthentingsoperasjonen, den henter ut fra begynnelsen av køen.
 
 \subsection{Stack}
-Stack er en LIFO; last in, first out. Stack implementeres oftest med et array, eller en lenket liste. En stack har egenskapene INSERT, PUSH og POP (DELETE).
+Stack er en \textbf{LIFO}; last in, first out. Det kan sammenlignes med en stabel med tallerkener. Når en tallerken er nyvasket, legges den på toppen. Når du trenger en tar du den øverste i stabelen. Akkurat som at det ikke er lov å snike i en kø, er det ikke lov å stokke om på tallerkenene i en stack. Toppen av stacken er altså det eneste som er tilgjelgelig; du kan når som helst sette inn noe på toppen eller ta ut det øverste elementet (med mindre stacken er tom). En stack implementeres oftest med et array, eller en lenket liste. En stack har egenskapene INSERT, PUSH og POP (DELETE).
 
 \begin{figure}[H]
 \includegraphics[scale=0.7]{images/stack}

@@ -290,9 +290,18 @@ Gitt A = [3, 3, 1, 4, 4, 3, 1, 2, 3, 5]. Hvordan ser C[0...6] ut idet Counting-S
 \noindent \textbf{Radix sort}\\
 Når man skal sortere en mengde heltall (f.eks. i det vanlige titallsystemet) kan det være et smart triks å først sortere etter det mest signifikante sifferet (altså sifferet lengst til venstre), deretter det nest mest signifikante osv. til man er i mål. Det som ikke er så gunstig med dette er at når man er ferdig med å sortere på det første sifferet har man fått ti grupper som må sorteres videre hver for seg. Etter at hver av disse er sortert på det andre sifferet har man hundre grupper, og dette er det strevsomt å holde styr på.
 \\\\
-Radix-sortering bruker en lignende idé som er enda smartere. Du vil se at hvis man først sorterer etter det minst signifikante sifferet, vil man få sortert alle tallene uten det lille problemet som oppstår ve då ta fatt i det mest signifikante sifferet. For at dette skal fungere er det meget viktig at man bruker en stabil sorteringsalgoritme for å sortere på hvert siffer. Grunnen til dette er at når man sorterer på f.eks. sifferet nest lengst til høyre og støter på to tall med samme siffer på den plassen vil de to tallene beholde den innbyrdes rekkefølgen de hadde. %FORTSETT HER!!
+Radix-sortering bruker en lignende idé som er enda smartere. Du vil se at hvis man først sorterer etter det minst signifikante sifferet, vil man få sortert alle tallene uten det lille problemet som oppstår ve då ta fatt i det mest signifikante sifferet. For at dette skal fungere er det meget viktig at man bruker en stabil sorteringsalgoritme for å sortere på hvert siffer. Grunnen til dette er at når man sorterer på f.eks. sifferet nest lengst til høyre og støter på to tall med samme siffer på den plassen vil de to tallene beholde den innbyrdes rekkefølgen de hadde.
+\\\\
+Det er viktig at man bruker en lineær sorteringsalgoritme (som f.eks. tellesortering) som den indre algoritmen – hvis ikke forsvinner hele effektiviteten til radix sort. Hvis tallene er små, er kjøretiden til radix sort $\theta(n)$. Hvis du ikke har en konstant verdi for hvor store tallene kan være, er kjøretiden $\theta(nd)$, hvor $d$ er antall sifre i det største tallet. Merk at antall sifre i et tall $m$ er $\theta(lg m)$, så hvis du får oppgitt at ingen tall er større enn $m$, vet du at kjøretiden er $\theta(n lg m)$. 
 
-Radix-sort sorterer tall i et gitt tallsystem (her titallsystemet) etter minste signifikante siffer.
+\begin{figure}[H]
+\includegraphics[scale=0.7]{images/radixsort}
+\centering %centering the image
+\caption{Radix sort}
+\label{fig:radixsort}
+\end{figure}
+
+\noindent I Figur \ref{fig:radixsort} sorteres tallene etter sifrene i de fargede feltene fra forrige trinn. For eksempel blir 112 plassert høyere opp enn 154 under sorteringen på det midterste sifferet (siden 1 < 5), og på grunn av den stabile sorteringen vil 112 garantert forbli høyere plassert enn 154 også under sorteringen av sifferet lengst til venstre selv om de to tallene har samme siffer her (ustabile sorteringsalgoritmer kunne ha funnet på å bytte om rekkefølgen, siden det vanligvis er uinteressant hvilken rekkefølge like elementer står i – og 112 og 154 ser jo like ut når vi bare ser på sifferet lengst til venstre). Hvis to tall er like, så må det tallet som ligger bak det andre også gjøre det etter sorteringen. Hvis ikke blir det bare rot. Se på tallene 112 og 154. Etter andre sortering har vi funnet at 12 er mindre enn 54. Når så tallet 1 testes mot 1, så kan ikke vi tillate at deres rekkefølge etter sorteringen blir vilkårlig, for da risikerer vi å få at 154 er mindre enn 112.
 
 \begin{lstlisting}
     function RADIXSORT(A,d)
@@ -302,16 +311,10 @@ Radix-sort sorterer tall i et gitt tallsystem (her titallsystemet) etter minste 
     end function
 \end{lstlisting}
 
-\noindent \textbf{Selection sort}\\
-
-
-
-
-
-
-
 \noindent \textbf{Bucketsort}\\
-Veldig lik Counting-sort, men bruker såkalte “bøtter” man putter tallene i. For eksempel [5,6) betyr at verdier større eller lik 5, men mindre enn 4 skal i bøtten.
+Bucket sort er nesten helt lik tellesortering, men bruker såkalte “bøtter” man putter tallene i. Trikset er at man lager "bøtter", eller tallintervaller, i listen i stedet for bare enkelttall. For eksempel [3,4) betyr at verdier større eller lik 3, men mindre enn 4 skal i bøtten. Når man har lagt alle tallene som skal sorteres inn i de tilhørende bøttene, sorterer man innholdet i hver bøtte etter en kjent og kjær sammenligningssortering, f.eks. insertion sort, og kombinerer det sorterte innholdet i bøttene til slutt.
+\\\\
+Forventet kjøretid for bøttesortering er $\theta(n)$. For å oppnå denne kjøretiden er tallene som sorteres nødt til å være uniformt fordelt (slik at det vil havne omtrent like mange tall i hver bøtte). I tillegg må antallet bøtter være omtrent like stort som antallet elementer som skal sorteres, for å unngå at for mange elementer må sorteres med sammenligningssorteringen.
 
 \begin{lstlisting}
     function BUCKETSORT(A)
@@ -331,9 +334,9 @@ Veldig lik Counting-sort, men bruker såkalte “bøtter” man putter tallene i
 \end{lstlisting}
 
 \noindent Bucket-Sort endrer kjøretid fra beste til verste tilfelle, og bruker ikke sammenligning.
-\\\\
-\noindent \textbf{Eksempel}\\
-Lager bøtter for tallintervallene. Gitt tallene 29, 25, 3, 49, 9, 37, 21, 43. Lager bøtter for 0-9, her havner 3 og 9. 10-19 er tom. 20-29 år 21, 25 og 29. 30-39 får 37. 40-49 får 43 og 49.
+
+\begin{boxed}
+Lager bøtter for tallintervallene. Gitt tallene 29, 25, 3, 49, 9, 37, 21, 43. Lager bøtter for 0-9, her havner 3 og 9. 10-19 er tom. 20-29 får 21, 25 og 29. 30-39 får 37. 40-49 får 43 og 49.
 
 \begin{figure}[H]
 \includegraphics[scale=0.5]{images/bucketsort1}
@@ -342,7 +345,7 @@ Lager bøtter for tallintervallene. Gitt tallene 29, 25, 3, 49, 9, 37, 21, 43. L
 \label{fig:bucketsort1}
 \end{figure}
 
-\noindent Når dette så skal setter sammen til en sortert tallfølge hentes tallene opp fra bøttene igjen.
+Når dette så skal setter sammen til en sortert tallfølge hentes tallene opp fra bøttene igjen.
 
 \begin{figure}[H]
 \includegraphics[scale=0.5]{images/bucketsort2}
@@ -351,9 +354,14 @@ Lager bøtter for tallintervallene. Gitt tallene 29, 25, 3, 49, 9, 37, 21, 43. L
 \label{fig:bucketsort2}
 \end{figure}
 
-\noindent Tallfølgen blir da til slutt 3,9, 21, 25, 29, 37, 43, 49.\\
+Tallfølgen blir da til slutt 3,9, 21, 25, 29, 37, 43, 49.
+\end{boxed}
+
+\noindent \textbf{Selection sort}\\
+%FYLL INN HER
 
 \noindent \textbf{Topologisk sortering}\\
+%FYLL INN HER
 Topologisk sortering bruker en DAG til å finne en rekkefølge gjennom alle elementene i grafen. Det tillates ikke sykler. Man begynner i noden som ikke har noen kanter inn til seg.
 
 \begin{lstlisting}
@@ -362,10 +370,55 @@ Topologisk sortering bruker en DAG til å finne en rekkefølge gjennom alle elem
     	as each vertex is finished, insert it onto the end of the list
     	return the list of vertices
     end function
-
 \end{lstlisting}
 
+\subsection{Finne $i$-te verdi}
+Hvordan skal man gå frem hvis man i en tallmengde vil finne den $i$-te største (eller den $i$-te minste) verdien? Anta at man sorterer med sammenligning. Da har vi lært at beste kjøretid er $\theta(n * log(n))$. En annen mulighet er å finne største verdi for deretter å eliminere denne. Ved å fortsette slik finner man det nest største, tredje største osv. helt til man kommer til det $i$-te største. Men om det $i$-te største ligger rundt midten, så er vi nødt til å finne største tall et antall ganger som er proporsjonalt med antallet tall. Dermed blir kjøretiden $\theta(ni)$, som i verste tilfelle er $\theta(n^2)$, som er dårligere enn det vi fikk i sted. Er det mulig å finne det $i$-te største elementet med en kjøretid på $\theta(n)$? Vi ser lett at dette gjelder for det største elementet. Også for det $i$-te største er svaret ja.
+\\\\
+Trikset er å bruke partisjoneringsmetoden fra \textbf{quicksort}. Vi velger et tilfeldig element som pivotelement, kall den \textit{p}, og lager to delmengder av den opprinnelige mengden vår. Dermed har vi at hvis posisjonen til \textit{p} er mindre enn \textit{i}, så holder det å lete i øvre halvdel, og er den mindre leter vi i nedre halvdel. Hvis posisjonen til \textit{p} er akkurat \textit{i}, så er \textit{p} det elementet vi leter etter. I quicksort kjørte vi rekursive kall på begge delmengder. Her gjør vi et rekursivt kall bare i den ene delmengden, så kjøretiden for denne metoden er $\theta(n)$ hvis man har en god strategi for valg av pivotelement. Det er ikke så vanskelig å se for seg: først partisjonerer man hele listen, så halve listen, osv. Summen av rekken $n$ + $\frac{n}{2}\)$ + \frac{n}{4}\) + $\frac{n}{8}\)$ + ... er $2n$. 
 
+\begin{boxed}
+Anta at vi har tallfølgen 2 8 7 1 3 6 4
+\newline\newline
+Vi ønsker å finne det tredje minste tallet. Med 4 som pivotelement har vi allerede at første splitt gir oss:
+\begin{center}
+2 1 3 4 7 6 8
+\end{center}
+Alle verdier til venstre for 4 er mindre eller lik, alle til høyre er større. Det vi nå vet, er at 4 er det fjerde minste elementet. Dermed kan vi se bort fra tallene 4, 7, 6 og 8, og vi står igjen med å finne det tredje minste tallet av:
+\begin{center}
+2 1 3
+\end{center}
+Velger vi så 2 som pivotelement, så gir splitten oss:
+\begin{center}
+1 2 4
+\end{center}
+2 er det nest minste elementet, vi kan se bort fra det og tallet 1. Dermed er det bare tallet 3 igjen, og det er det minste tallet i følgen vår.
+\end{boxed}
+
+\subsection{Hashing}
+Venligvis brukes \textbf{direkte adressering} når man skal slå opp på elementet på plass nummer \textit{i} i en array, noe som går på konstant tid. Dette fungerer så lenge vi har råd til å ha en liste som har én posisjon for hver mulig verdi. Men dette kan gi mange ubrukte plasser. Hvis man for eksempel vil lagre data om personer slik at man kan gjøre oppslag på fødselsnumre, trenger man et array med over 30 milliarder plasser for å kunne gjøre direkte oppslag på fødselsnumrene. Siden 11 sifre er i bruk, vil mesteparten av den enorme plassen som er satt av til arrayet være bortkastet. For å ikke sløse slik med plassen, benytter man seg av \textbf{hashing}. Dette er ikke så ulikt prinsippet for bøttesortering. Man kan tenke seg at en hashtabell består av en mendge bøtter, og i hver av bøttene er det rom for et par posisjoner fra listen. Slik vil mye plass kunne spares dersom man klarer å lage hashtabellen liten. Men det er en risiko for at det faller flere verdier i en og samme bøtte. Det er dette som kalles \textbf{kollisjoner}.
+\\\\
+For å få bukt med kollisjoner, er det et godt triks å bruke \textbf{lenkede lister}. Men, da risikerer man at noen av listene blir veldig lange – hvis man er veldig uheldig vil alt ende opp i samme liste. Et annet gyllent triks er det som kalles \textbf{åpen adressering}. Enkelt sagt vil dette si at hvis man vil legge til et element og dennes plass er opptatt, så legger man rett og slett elementet inn i den første ledige plassen lenger bort i tabellen. Dessverre er det en del problemer som kan oppstå, så dette er en litt komplisert affære.
+\\\\
+Et svert aktuelt spørsmål er hvordan man skal lage hashtabellen. Selve tabellen er bare en vanlig array. Man snakker om en hash-funksjon \textit{h} som tilordner enhver posisjon i listen til en posisjon i hashtabellen. Men denne må velges med kløkt, så elementene blir spredd mest mulig.
+
+\begin{itemize}
+    \item \textbf{Divisjonsmetoden}\\
+La \textit{k} være nummeret til posisjonen i listen, og la \textit{m} være antallet plasser i hashtabellen. Da kan man sette hashfunksjonen til å ta resten av \textit{k} når det deles på \textit{m}. Altså:
+\begin{center}
+$h(k) = k$ mod $m$
+\end{center}
+hvor tabellstørrelsen \textit{m} må velges med omhu for at resultatene skal bli gode. Et godt valg er å la \textit{m} være et primtall og holde det langt unna en potens av tallet 2.
+\item \textbf{Multiplikasjonsmodellen}\\
+Denne metoden går i to trinn. Først multipliserer vi \textit{k} med et tall \textit{A} som ligger mellom 0 og 1. Deretter tar vi desimalene (eller resten av flyttallsdivisjonen med tallet 1) og ganger med en verdi \textit{m}, og runder av nedover. Matematisk blir dette:
+\begin{center}
+$h(k) = \lfloor m((kA) mod 1) \rfloor$
+\end{center}
+ \end{itemize}
+
+\noindent Når det gjelder kjøretider til hashing så går det stort sett fort. Å slå opp i et vanlig array går på $O(1)$ tid. Hashing går som oftest like raskt i praksis, med $O(1)$ i gjennomsnittlig kjøreitd. Konstantleddet er dog større i hashing, fordi vi må bruke hashfunksjonen for å regne ut plasseringen og kanskje håndtere kollisjoner. Husk at hvis hashfunksjonen er sårlig stilt slik at veldig mange elementer havner på samme sted i hashtabellen (og vi fikser kollisjoner med en lenket liste) så vil hashingen oppøre seg nesten som en lenket liste og kjøretiden blir $O(n)$ i verste tilfelle. Det finnes bedre metoder, blant annet \textbf{lineær probing} og \textbf{kvadratisk probing}, som står i Cormen. \textbf{Perfekt hashing} gir enda bedre resultater i visse situasjoner, men akkurat det er hardcore og vi lar det ligge.
+
+ 
 \subsection{Søking}
 
 \subsubsection{Brute force}
