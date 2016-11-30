@@ -20,7 +20,7 @@ $f(n - 2)$ = $f(n - 3)$ + $f(n - 4)$\\
 Allerede her kommer det fram to overlappende delproblemer, $f(n - 2)$ og $f(n - 3)$. Disse vil her regnes ut flere ganger, og utregningen innebærer enda flere rekursive kall. 
 \end{boxed}
 
-Hvis du kommer over et problem med optimal substruktur og overlappende delproblemer, er det stor mulighet for at dette er en oppskrift du kan følge for en effektiv algoritme:
+\noindent Hvis du kommer over et problem med optimal substruktur og overlappende delproblemer, er det stor mulighet for at dette er en oppskrift du kan følge for en effektiv algoritme:
 \begin{enumerate}
     \item Bli sikker på at problemet har optimal substruktur og overlappende delproblemer.
     \item Løs problemet for eller de mest trivielle situasjonen(e). Bruk så disse til å finne de nest vanskeligste osv.
@@ -29,7 +29,6 @@ Hvis du kommer over et problem med optimal substruktur og overlappende delproble
     \item Programmer.
 \end{enumerate}
 
-\begin{boxed}
 Per er veldig dårlig i rettskrivning. Han vet ikke om han skal skrive "gullerot" eller "gulrot". Per er ikke alene, blant annet har de som designer søkemotorer på internett oppdaget at det er mange som han. I stedet for at han får null treff på "gullerot" er det et ønske om at han skal få opp et spørsmål om han ikke heller vl søke på "gulrot" eller andre lignende ord. Denne funksjonen er også nyttig for de som skriver touch litt fortere enn de klarer.
 \\\\
 Søkemotoren trenger da blant annet et program som sammenligner ord. Det er dette vil skal lage. Som eksempel bruker vi "gullerot" og "gulrot". Vi ønsker å finne ut hvor stor forskjell det er på disse to skrivemåtene, dvs. hvor mange editeringer vi må gjøre for å få "gullerot" til å bli "gulrot". 
@@ -50,19 +49,22 @@ Søkemotoren trenger da blant annet et program som sammenligner ord. Det er dett
             \item Vi kan ta verdien i B of legge til 1. Dette tilsvarer å erstatte bokstav \textit{i} med bokstav \textit{j}.
             \item Vi kan ta verdien i \textit{c} og legge til 1. Dette tilsvarer å slette bokstav \textit{i}.
         \end{enumerate}
-        Vi velger selvsagt det som gir alternativet som tilsvarer færrest editeringer.
-        \item Det er bare å fylle inn tabellen.
+        Vi velger selvsagt det som gir alternativet som tilsvarer færrest editeringer.        
+    \end{enumerate}
+    \item Det er bare å fylle inn tabellen.
         \begin{figure}[H]
         \includegraphics[scale=0.45]{images/dp}
         \centering %centering the image
         \caption{Dynamisk programmering}
         \label{fig:dp}
         \end{figure}
-        
-    \end{enumerate}
+    \item For å programmere dette må man først opprette en tabell som har størrelse "lengdePåFeilOrd" * "lengdePåRettOrd". Deretter må du fylle inn de trivielle verdiene. Husk at verdien i $c(0,0$ avhenger av om første bokstav i de to ordene er like eller ikke. Tenk logisk her, dette er ikke vanskelig. Deretter må du lage en dobbel for-løkke som går gjennom hele matrisen, venstre mot høyre, ovenfra og ned, og fyll inn verdier ut fra reglene i punkt 3.
 \end{enumerate}
 
-\end{boxed}
+\subsection{Memoisering}
+Her benytter vi vanlig traversering, men i stedet for å løse samme problem flere ganger lagres verdiene i en tabell etterhvert. For hver verdi som skal beregnes kikker vi altså først i tabellen for å se om vi har gjort dette før, hvis ikke må vi regne.
+\\\\
+Vi velger memoisering og ikke dynamisk programmering når vi ikke trenger å regne ut alle underproblemene for å løse hovedproblemet.
 
 \subsection{Lengste felles understreng}
 \subsection{Rod-cutting}

@@ -1,3 +1,31 @@
 \section{Problemkompleksitet}
-\subsection{P, NP, NPC}
-\subsubsection{Eksempel på problem som er NPC}
+Det finnes mange klasser av problemer. P, NP, NPC og NP-Hard er fire slike klasser.
+
+\subsection{NP (Non-deterministic Polynomial}
+Mengden av de problemene der gyldigheten av en gjettet løsning kan testes i polynomisk tid.
+
+\subsection{P (Polynomial}
+Mengden av de problemene vi vet kan løses i polynomisk tid. Det vil si de som har ''worst case'' kjøretid på $O(n^k)$, hvor \textit{k} er en konstant og \textit{n} er størrelsen på input. Det er opplagt at disse er med i mengden NP. Det er slike problemer dette kurset går ut på å løse. 
+
+\subsection{NPC (NP-komplett)}
+Enkelt forklart er dette samlingen av de vanskeligste problemene i NP. Hvis det finner en polynomisk løsning for et problem i NPC, finnes det polynomiske løsninger for alle problemer i NP. Dette er definisjonen på et NP-komplett problem. Alle NP-komplette problemer kan nemlig omformes til hverandre, så dersom vi finner en polynomisk løsning på ett av disse problemene, har vi løst dem alle (og $NP = P$, siden NPC var de vanskeligste problemene i NP, og det viste seg at de også kunne løses i polynomisk tid). Det motsatte gjelder også; hvis et av problemene i NPC viser seg å være uløsbart i polynomisk tid, er alle det. Hittil har man kun funnet eksponentielle løsninger av NPC-problemer.
+\\\\
+I likhet med andre ''komplette'' problemer i andre problem-klasser er altså NPC-problemene de vanskeligste som finnes i klassen. I prinsippet er de også ett og samme problem, da alle kan reduseres til det samme problemet i polynomisk tid. (Det ville også vært meningsløst å si at flere lignende problemer er "det vanskeligste"). Her kan det være verdt å få med seg at hvis et problem A kan reduseres (omformes) til et problem B på mindre tid enn (eller like mye tid som) det tar å løse B, kan B sies å være minst like vanskelig som A (har vi en algoritme for å løse B, kan vi bruke den til å løse A, men det er ikke sikkert at en algoritme for A kan løse B).
+\\\\
+Foreløpig er det ikke funnet noen algoritme som kan løse NPC-problemer i polynomisk tid, men det er jeller ikke bevist at en slik løsning ikke finnes. Dette er antakeligvis det største uløste problemet innen informatikkens verden, og den som enten klarer å finne en polynomisk løsning eller klarer å bevise at dette ikke er mulig vil bli en av verdens mest kjente vitenskapsmenn (eller kvinner).
+\\\\
+\textbf{NP-hard} er mengden av de problemene som alle problemer i NP kan reduseres til i polynomisk tid. Disse problemene trenger ikke nødvendigvis ligge i NP. NP-hard er ikke pensum, men begrepet vil sikkert dukke opp.
+
+\subsection{SAT-problemet}
+Men hvordan vie at et problem er NPC? Det høres i utgangspunktet umulig ut, med heldigvis finnes det teoremer som sier at SAT-problemet er i NPC. Sat går ut på at vi har en boolsk krets eller boolsk nettverk med AND-, OR- og NOT-porter, og så ønsker vi å finne ut om der eksisterer et sett med inputverdier (0er/false og 1ere/true) som gjør at outputen blir 1 (true). Det vi må vise er at alle problemer i NP kan reduseres til SAT-problemet i polynomisk tid.
+
+\subsubsection{Andre kjente NPC-problemer}
+SAT-problemet er ikke veldig enkelt å jobbe med. Det er ofte enklere å sammenligne problemet med andre kjente NPC-problem. Vi skal presentere noen for dere her. Hvis dere blir spurt om å vise at et problem er NPC, kan dere bruke en av disse å sammenligne med.
+\\\\
+\textbf{Lengste vei:} Vi har sett på algoritmer som finner korteste vei i grafer uten negative sykler med polynomisk kjøretid. Men for generelle grafer blir det verre. Å finne korteste eller lengste vei i en graf er NPC hvis man ikke har noen begrensninger på kantvektene (slik som for eksempel ingen negative kanter for å unngå sykler). Men, akkurat som at korteste-vei-problemet der man ikke har negative sykler som en del av P, gjelder det samme for lengste-vei-problemet for grafer uten positive sykler. Dette er fordi man kan gange alle kantvekter med $-1$ og dermed få et ekvivalent korteste-vei-problem.
+\\\\
+\textbf{Klikk:} En klikk er en komplett subgraf av grafen $G$. Det vil si dersom en delmengde av nodene i $G$ har forbindelse til alle andre i denne delmengden, har vi en klikk (alle kjenner alle i en klikk). Størrelsen på klikken er antall noder som er med. Spørsmålet "Eksisterer det en klikk av en gitt størrelse $k$" gir oss et NPC-problem.
+\\\\
+\textbf{Hamiltonsykel:} Vi kan finne en Euler-sti (kantene benyttes en og bare en gang når vi traverserer grafen, uten å hoppe) i polynomsik tid, men å bestemme om en graf har en Hamilton-sykel er et NPC-problem. (I en Hamilton-sykel besøkes nodene en og bare en gang langs en sammenhengende vei gjennom grafen, dvs. vi har en enkel sykel gjennom alle nodene i grafen.)
+\\\\
+\textbf{Travelling Salesman Problem (TSP):} Vi har en handelsmann som skal besøke $n$ byer. Han skal bare innom hver by en gang og ønsker å gjøre rundturen så billig som mulig. Poenget her er altså å finne en minimal Hamiltonsykel. Eller for å være helt korrekt er problemet å finne ut om det eksisterer en rute som er $\leq$ en gitt verdi.
