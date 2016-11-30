@@ -216,7 +216,7 @@ Det er akkurat slik Dijkstra finner de korteste veiene; så fort en syklist når
 
 \noindent Hvis man har en DAG, vil det ikke oppstå noen vanskeligheter selv om man har negative kostnader på kantene, for i en DAG vil det ikke eksistere noen sykler i alle tilfeller. Trikset for å finne korteste vei er i første rekke å gjøre en topologisk sortering av DAGen. Slik oppnår vi en lineær ordning av nodene. Deretter trenger vi bare besøke nodene en gang i den topologisk sorterte rekkefølgen og kjøre en relaxation for hver gang til de noder som ligger foran. 
 \\\\
-Kjøretiden vil avhenge av den topologiske sorteringen, og en slik sortering har kjøretid $\theta(|V|+|E|)$. Ingen andre ledd i algoritmen for korteste vei i en DAG vil bli større enn den topologiske sorteringen, så kjøretiden blir $\theta(|V|+|E|)$.
+Kjøretiden vil avhenge av den topologiske sorteringen, og en slik sortering har kjøretid $\theta(|V|+|E|)$. Ingen andre ledd i algoritmen for korteste vei i en DAG vil bli større enn den topologiske sorteringen, så kjøretiden blir $\theta(|V|+|E|)$.\\
 
 \noindent\textbf{DAG shortest path}\\
 DAG-Shortest-Path er en korteste vei, en-til-alle algoritme. Tillater ikke negative kanter, og kan selvfølgelig ikke ha sykler, da det er en DAG. Gjør topologisk sortering av DAGen og besøker hver node en gang for å kjøre RELAX på nodene foran.
@@ -235,14 +235,14 @@ DAG-Shortest-Path er en korteste vei, en-til-alle algoritme. Tillater ikke negat
 \end{lstlisting}
 
 \subsubsection{Alle til alle}
-En soleklar måte å takle dette problemet på, er rett og slett å bruke en god algortime for et én-til-alle-problem, og så bruke denne på samtlige noder som startnoder. Dette er ikke så dumt som det kan høres ut som. Hvis alle kostnadene er ikke-negative, fungerer det meget bra å bruke Dijkstra. Kjøretiden her vil bli $O(|V|^3)$, som man ser ved å multiplisere kjøretiden til en gjennomgang av Dijkstra med antallet noder $|V|$. Hvis vi har negative kostnader og kjører samme trikset med Bellman-Ford, blir kjøretiden $O(|V|^2 |E|)$, som ikke er så veldig bra fordi $|E|$ er av størrelsesorden $|V|^2$. Nå skal det sies at med meget smarte fremgangsmåter her, vil disse kjøretidene kunne senkes betraktelig. Men vi bruker heller en algoritme som tar for seg problemet med alle-til-alle uten å skulle gå omveien om mange gjennomkjøringer av en én-til-alle-algoritme.
+En soleklar måte å takle dette problemet på, er rett og slett å bruke en god algortime for et én-til-alle-problem, og så bruke denne på samtlige noder som startnoder. Dette er ikke så dumt som det kan høres ut som. Hvis alle kostnadene er ikke-negative, fungerer det meget bra å bruke Dijkstra. Kjøretiden her vil bli $O(|V|^3)$, som man ser ved å multiplisere kjøretiden til en gjennomgang av Dijkstra med antallet noder $|V|$. Hvis vi har negative kostnader og kjører samme trikset med Bellman-Ford, blir kjøretiden $O(|V|^2 |E|)$, som ikke er så veldig bra fordi $|E|$ er av størrelsesorden $|V|^2$. Nå skal det sies at med meget smarte fremgangsmåter her, vil disse kjøretidene kunne senkes betraktelig. Men vi bruker heller en algoritme som tar for seg problemet med alle-til-alle uten å skulle gå omveien om mange gjennomkjøringer av en én-til-alle-algoritme.\\
 
-\textbf{Floyd-Warshall}\\
+\noindent\textbf{Floyd-Warshall}\\
 Ved å benytte oss av prinsippet om \textbf{dynamisk programmering} skal vi her vise hvordan Floyd-Warshall-algoritmen fungerer.
 \\\\
 Pseudokoden for Floyd-Warshall er relativt grei. Man lager en nabomatrise til nodene, men gjør litt om på den. Hvis det går en vei fra en node til en annen, setter vi verdien til å være kostnaden på kanten mellom dem. Går det ikke en direkte kant mellom de to nodene, settes kostnaden til å være uendelig ($\infty$). Deretter velger man seg en node, kall noden \textit{a}, som man har lov til å gå innom. Så tester man veien mellom to og to noder, kall dem \textit{u} og \textit{v}. Hvis det koster mindre å gå via \textit{a}, så legger man inn denne veien til å være den korteste. Nå har vi en oversikt over de korteste veiene som kun består av enkeltkanter eller som bruker node \textit{a} (og ingen andre). Så kan vi gå videre og tillate en annen node, \textit{b}, og sjekke om vi kan få kortere veier ved å ta den i bruk osv. Etter å ha gått gjennom alle nodene på denne måten vil vi til slutt ha en oversikt over de korteste veiene uten noen begrensninger på hvilke noder som kan brukes. Det er heller ikke så veldig vanskelig å lage enda en nabomatrise som holder styr på hvilke noder man skal gå innom for å oppnå denne ultimate veien. Det er ikke så rent ulogisk at dette vil fungere, men det gjelder å få et godt grep om hva som skjer.
 
-\begin{boxed}
+
 \begin{figure}[H]
 \includegraphics[scale=0.5]{images/floyd-warshall}
 \centering %centering the image
@@ -250,15 +250,8 @@ Pseudokoden for Floyd-Warshall er relativt grei. Man lager en nabomatrise til no
 \label{fig:floyd-warshall}
 \end{figure}
 
-Figuren viser grafen til problemet vårt. Om vi bruker algoritmen på siden 630 i Cormen, vil matrisene under utregning bli slik du ser under her. Merk at indeksen i hver matrise betyr hvilken node vi har gått innom. Den første, med indeks 0, er startmatrisen. \newline
-[SETT INN FRA SIDE 51 I KOMPENDIE HER]
-%M = \begin{bmatrix}
- %      \frac{5}{6} & \frac{1}{6} & 0      %     \\[0.3em]
-   %    \frac{5}{6} & 0           & \frac{1}{6} \\[0.3em]
-    %   0           & \frac{5}{6} & \frac{1}{6}
-     %\end{bmatrix}
-\end{boxed}
-
+\noindent Figuren viser grafen til problemet vårt. Om vi bruker algoritmen på siden 630 i Cormen, vil matrisene under utregning bli slik du ser under her. Merk at indeksen i hver matrise betyr hvilken node vi har gått innom. Den første, med indeks 0, er startmatrisen. 
+\\\\
 \noindent Kjøretiden til Floyd-Warshall er ganske enkelt $O(|V|^3)$. Det er $|V|$ noder man skal innom, og for hver gang kan man variere startnoden med $|V| - 1$ muligheter og sluttnoden med $|V| - 2$ muligheter. Om man ser på pseudokoden i Cormen, så ser man at den består av tre greie for-løkker. Nå skal det sies at også Dijkstra på alle nodene gir $O|V|^3$, men operasjonen per ledd i Floyd-Warshall er så mye mindre at denne stort sett vil lønne seg selv hvis alle kantene er positive. Dersom det er relativt få kanter i forhold til noder vil derimot Dijkstra med heap (som kjører på $O(|E| lg |V|)$ for hver av de $|V|$ nodene) lønne seg.
 
 \subsection{Maksimal flyt}
@@ -275,16 +268,54 @@ En flyt i G er en funksjon: $f: V * V \rightarrow$  ${\Bbb R}$
     \item \textbf{Kapasitet:} For alle \textit{u, v} $\in V$ så krever vi $f (u,v) \leq c (u,v)$. Flyten må altså ikke overstige kapasiteten.
     \item \textbf{Symmetri:} For alle $u,v \in V$ så krever vi $f (u,v) = -f(v,u)$. Positiv flyt én vei tilsvarer altså en like stor, negativ flyt motsatt vei (akkurat som når man regner på strøm i elektriske kretser).
     \item \textbf{Bevaring av flyt:} For alle $v \in V - \{s,t\}$ (altså for alle noder \textit{v} unntatt kilden og sluket) krever vi at flyten inn må være like stor som flyten ut, dvs. at det ikke "renner over" i noen noder og at ingen noder kan produsere flyt selv. Det kan formuleres som at summen av flyten inn i \textit{v} må være null:
+    \begin{center}
+    $\sum\limits_{u \in V} f(u,v) = 0$ 
+    \end{center}
 \end{itemize}
 
+\noindent Det første kravet sier at vi alltid må respektere kapasiteten. Det andre kravet er egentlig bare en formalitet som gjør det mulig å regne med negativ flyt, som generaliserer teorien en hel del. Hvis jeg sender hundre kroner til din konto, vil de gå en positiv flyt av penger fra meg til deg, mens det går en negativ flyt fra deg til meg. Bevaringsloven til sist sier bare at flyt ikke uten videre kan forsvinne eller oppstå. Dette kan sammenlignes med diverse bevaringslover fra fysikken, som f.eks. energibevaring.
+\\\\
+Vi sier at $|f|$ er flyten fra kilden til sluket, og dens verdi er rett og slett summen av flyten til alle veiene ut fra kilden, som igjen er det samme som summen av flyten inn i sluket. Mer presist:
+\begin{center}
+    $|f| = \sum\limits_{u \in V} f(s,v)$ 
+    \end{center}
+    
+\noindent Legg spesielt merke til siste krav, som gir at total flyt i en node må være null. Det som kommer inn blir sendt ut igjen med samme rate, det er ingenting som hoper seg opp. Dette kan sammenlignes med Kirchoffs lover for elektrisk strøm. Ellers er den totale positive flyten definert til å være summen av de positive flytene inn i en node, eller:
+\begin{center}
+    $\sum\limits_{u \in V, f(u,v)>0} f(u,v) = 0$ 
+    \end{center}
+    
+\noindent Hvis vi har flere kilder og sluk, er det et godt triks å legge til en superkilde og et supersluk, slik at vi oversetter problemet til det vi er vant til. Dette gjøres ved å opprette en ny node med kanter til alle kildene. Sett kapasiteten på disse kantene til uendelig (med mindre du ønsker å sette noen spesielle begrensninger på flyten). Tilsvarende skal alle slukene ha en kant til supersluket. I alle videre utregninger skal du tenke på superkilden/-sluket som eneste kilde/sluk.
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/flytnettverk}
+\centering %centering the image
+\caption{Flytnettverk}
+\label{fig:flytnettverk}
+\end{figure}
+
+\noindent \textbf{Ford-Fulkersons metode}\\
+Ford-Fulkerson-metoden er en god algoritme som finner maksimal flyt i et flytnettverk. Hver iterasjon forsøker å finne en flytforøkende sti, og setter på all den flyten som er mulig. Deretter leter den etter en ny flytforøkende sti, og gjentar prosessen. Når det ikke er flere flytforøkende stier har man oppnådd maksimal flyt. Den benytter seg av DFS for å finne flytforøkende sti. Det er altså tre essensielle ideer; residualnettverk, flytforøkende vei, og snitt.\\
+
 \subsubsection{Residualnettverk}
+Som uttrykket kanskje tilsier ("residual" betyr "rest"), for et flytnettverk med en gitt flyt, består residual-nettverket av de kantene som tillater mer flyt.
+
+\begin{boxed}
+Vi beskriver ofte flyten og kapasiteten ved å skrive en brøk med flyt-verdien øverst og kapasitetsverdien nederst. Man får residual-nettverket ved å ta de opprinnelige kapasiteter og trekke fra den flyten som går i hver kant. Med flyten fra Figur \ref{fig:flytnettverk} får vi residualnettverket til å bli som vist i Figur \ref{fig:residualnettverk.}
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/residualnettverk}
+\centering %centering the image
+\caption{Residualnettverk}
+\label{fig:residualnettverk}
+\end{figure}
+\end{boxed}
+
 \subsubsection{Flytforøkende sti}
 \subsubsection{Minimalt kutt}
 Minimum-snitt (min-cut) på et flytnettverk: det snittet som har lavest kapasitet av alle snitt. Det vil si min-cut angir en flaskehals i flytnettverket. Det vil si at det ikke kan sendes mer flyt gjennom nettverket enn det vi kan sende gjennom flaskehalsen. Man kan da ikke finne noen flytforøkende sti over flaskehalsen. Det vil da være maksimal-flyt, max-flow.\\
 
-\noindent \textbf{Ford-Fulkersons metode}\\
-Ford-Fulkerson-metoden finner maksimal flyt i et flytnettverk. Hver iterasjon forsøker å finne en flytforøkende sti, og setter på all den flyten som er mulig. Deretter leter den etter en ny flytforøkende sti, og gjentar prosessen. Når det ikke er flere flytforøkende stier har man oppnådd maksimal flyt. Den benytter seg av DFS for å finne flytforøkende sti.
-\\
+
 
 \noindent \textbf{Edmonds-Karp}\\
 Endret en bokstav på Ford-Fulkerson-metoden. De benytter seg av BFS. Edmonds-Karp bruker Ford-Fulkerson og BFS til å finne flytforøkende stier.\\
