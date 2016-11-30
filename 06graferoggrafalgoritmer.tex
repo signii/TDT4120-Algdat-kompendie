@@ -117,7 +117,7 @@ Vi oppretter køen "oppdaget", hvor vi legger nodene etterhvert som vi oppdager 
 Legg merke til hvordan nodene kommer ut av køen i stigende rekkefølge med hensyn på avstand fra startnoden.
 \end{boxed}
 
-BFS implementeres med en kø. BFS utforsker grafen i bredden. Man starter på foreldrenoden og legger inn alle dens barn i køen. Når alle naboer til node $x$ er oppdaget, fjernes den fra køen og man tar den neste noden i køen og legger alle dens barn inn i køen. Når køen er tom, sjekker man ikke videre om det er ubesøkte noder.
+\noindent BFS implementeres med en kø. BFS utforsker grafen i bredden. Man starter på foreldrenoden og legger inn alle dens barn i køen. Når alle naboer til node $x$ er oppdaget, fjernes den fra køen og man tar den neste noden i køen og legger alle dens barn inn i køen. Når køen er tom, sjekker man ikke videre om det er ubesøkte noder.
 
 \begin{lstlisting}
     function BFS(G,v) // v er startnode
@@ -136,13 +136,10 @@ BFS implementeres med en kø. BFS utforsker grafen i bredden. Man starter på fo
 
 \end{lstlisting}
 
-
-\noindent \textbf{Traversering}
-
 \subsection{Korteste vei}
 Denne typen problemer er ekstremt nyttig i mange sammenhenger. Hvis man skal kjøre bil fra et sted til et annet, vil man gjerne kjøre den korteste veien for å spare bensin og tid. I dette tilfellet holder det å se på veilengden som en kostnad for hver kant. I dette tilfellet blir kostnaden alltid positiv, men det trenger den ikke bli i andre eksempler. Hvis man skal dra rundt og selge ting og er ute etter å se på hvor mye man tjener på forskjellige ruter, kan det hende man vet at det på enkelte strekninger vil bli tap. Men det er fortsatt mulig å finne ut hvilken vei det lønner seg å ta for å tjene mest mulig penger.
 
-\subsubsection{Én til alle}
+\subsection{Én til alle}
 Her vi vil konsentrere oss om de problemene som har ett startpunkt, og som går til alle tenkelige sluttpunkt i den mengden man ser på. Anta at vi er fire studenter som deler kjøkken på Nedre Singsakerslette, og alle har sin egen bil og skal hjem til jul. Førstemann bor i Drøbak, den andre på Kolbotn, nummer tre på Tretten, og fjerdemann i Malvik. Da holder det at man kjører en algoritme for korteste vei, én-til-alle-problem (her kan man også benytte seg av det gunstige faktum at alle kostnader er positive, noe som dere etterhvert vil se gir enklere og raskere algoritme). Med et kart over alle byer og veier i Norge er det bare å bruke Trondheim som startpunkt og kjøre en algoritme for å finne de korteste veiene fra Trondheim til alle de andre byene, og så sjekke rutene man fikk til Drøbak, Kolbotn, Tretten og Malvik. Dermed kan alle ta hver sin bil (ikke så veldig sosialt eller økonomisk, men eksempelets intensjon helliger midlet) og kjøre korteste vei til sin hjemby. 
 \\\\
 Et viktig prinsipp i alle korteste-vei-problemene, er det som kalles \textbf{relaxation}. Dette er ikke noe mer skummelt enn at man sjekker en eller annen kant fra en node \textit{u} til en annen node \textit{v}, og skulle denne kanten tilby en kortere vei til \textit{v} enn den veien vi eventuelt hadde fra før, oppdaterer man node \textit{v} med informasjon om at den korteste veien nå kommer fra node \textit{u}. Skulle den veien man prøver være lenger, oppdaterer man ikke.
@@ -154,9 +151,9 @@ Et viktig prinsipp i alle korteste-vei-problemene, er det som kalles \textbf{rel
 \label{fig:relaxation}
 \end{figure}
 
-\noindent En viktig ting å ha i mente, er at korteste vei \textbf{ikke kan ha sykler}. Har man en \textbf{positiv sykel}, så vil man ved å fjerne denne sykelen fortsatt ha en vei mellom sine to noder som også blir kortere enn om man brukte sykelen. Har man en sykel med verdi 0, så blir denne helt uniteressant, og man kan like godt droppe den. Hvis det eksisterer en \textbf{negativ sykel}, så vil man kunne gå rundt denne negative sykelen så mange ganger man vil og få stadig kortere vei. Dermed vil det ikke kunne være en bestemt korteste vei, da man alltid kan ta en ny runde i den negative syklen og få en enda kortere vei. Negative sykler ødelegger faktisk hele problemstillingen, og ingen av algoritmene våre vil klare å finne noe godt svar dersom grafen inneholder en negativ sykel som kan nås fra startnoden. Merk dog at en graf kan inneholde negative kanter uten å ha negative sykler.\\
+\noindent En viktig ting å ha i mente, er at korteste vei \textbf{ikke kan ha sykler}. Har man en \textbf{positiv sykel}, så vil man ved å fjerne denne sykelen fortsatt ha en vei mellom sine to noder som også blir kortere enn om man brukte sykelen. Har man en sykel med verdi 0, så blir denne helt uniteressant, og man kan like godt droppe den. Hvis det eksisterer en \textbf{negativ sykel}, så vil man kunne gå rundt denne negative sykelen så mange ganger man vil og få stadig kortere vei. Dermed vil det ikke kunne være en bestemt korteste vei, da man alltid kan ta en ny runde i den negative syklen og få en enda kortere vei. Negative sykler ødelegger faktisk hele problemstillingen, og ingen av algoritmene våre vil klare å finne noe godt svar dersom grafen inneholder en negativ sykel som kan nås fra startnoden. Merk dog at en graf kan inneholde negative kanter uten å ha negative sykler.
 
-\noindent\textbf{Bellman-ford}\\
+\subsubsection{Bellman-ford}
 Denne algoritmen tar for seg de problem hvor kostnadene på kantene til grafen kan være negative. Dermed blir den ganske generell. Hvis det eksisterer negative sykler, returnerer Bellman-Ford "FALSE". Men om slike negative sykler ikke forekommer (vel og merke holder det at de ikke kan nås fra utgangspunktet vårt), så returnerer algoritmen beste vei.
 \\\\
 Algorimen fungerer som følger (se også s. 588 i Cormen):
@@ -174,7 +171,7 @@ Algorimen fungerer som følger (se også s. 588 i Cormen):
 \label{fig:bellman-ford}
 \end{figure}
 
-\noindent\textbf{Dijkstras algoritme}\\
+\subsubsection{Dijkstras algoritme}
 Kravet for å bruke Dijkstras algoritme er at alle kantene har positive verdier (eventuelt også verdien 0). Da kan man bruke en smartere algoritme enn Bellmann-Ford. Dijkstrra er faktisk en \textbf{grådighetsalgoritme}. Pseudokode står på side 595 i Cormen.
 \\\\
 Dijkstra er en korteste vei, en-til-alle-algoritme. Tillater ikke negative kanter. Den velger noder en etter en fra hvor nærme de er startnoden. 
@@ -216,9 +213,9 @@ Det er akkurat slik Dijkstra finner de korteste veiene; så fort en syklist når
 
 \noindent Hvis man har en DAG, vil det ikke oppstå noen vanskeligheter selv om man har negative kostnader på kantene, for i en DAG vil det ikke eksistere noen sykler i alle tilfeller. Trikset for å finne korteste vei er i første rekke å gjøre en topologisk sortering av DAGen. Slik oppnår vi en lineær ordning av nodene. Deretter trenger vi bare besøke nodene en gang i den topologisk sorterte rekkefølgen og kjøre en relaxation for hver gang til de noder som ligger foran. 
 \\\\
-Kjøretiden vil avhenge av den topologiske sorteringen, og en slik sortering har kjøretid $\theta(|V|+|E|)$. Ingen andre ledd i algoritmen for korteste vei i en DAG vil bli større enn den topologiske sorteringen, så kjøretiden blir $\theta(|V|+|E|)$.\\
+Kjøretiden vil avhenge av den topologiske sorteringen, og en slik sortering har kjøretid $\theta(|V|+|E|)$. Ingen andre ledd i algoritmen for korteste vei i en DAG vil bli større enn den topologiske sorteringen, så kjøretiden blir $\theta(|V|+|E|)$.
 
-\noindent\textbf{DAG shortest path}\\
+\subsubsection{DAG shortest path}
 DAG-Shortest-Path er en korteste vei, en-til-alle algoritme. Tillater ikke negative kanter, og kan selvfølgelig ikke ha sykler, da det er en DAG. Gjør topologisk sortering av DAGen og besøker hver node en gang for å kjøre RELAX på nodene foran.
 
 \begin{lstlisting}
@@ -234,10 +231,10 @@ DAG-Shortest-Path er en korteste vei, en-til-alle algoritme. Tillater ikke negat
 
 \end{lstlisting}
 
-\subsubsection{Alle til alle}
-En soleklar måte å takle dette problemet på, er rett og slett å bruke en god algortime for et én-til-alle-problem, og så bruke denne på samtlige noder som startnoder. Dette er ikke så dumt som det kan høres ut som. Hvis alle kostnadene er ikke-negative, fungerer det meget bra å bruke Dijkstra. Kjøretiden her vil bli $O(|V|^3)$, som man ser ved å multiplisere kjøretiden til en gjennomgang av Dijkstra med antallet noder $|V|$. Hvis vi har negative kostnader og kjører samme trikset med Bellman-Ford, blir kjøretiden $O(|V|^2 |E|)$, som ikke er så veldig bra fordi $|E|$ er av størrelsesorden $|V|^2$. Nå skal det sies at med meget smarte fremgangsmåter her, vil disse kjøretidene kunne senkes betraktelig. Men vi bruker heller en algoritme som tar for seg problemet med alle-til-alle uten å skulle gå omveien om mange gjennomkjøringer av en én-til-alle-algoritme.\\
+\subsection{Alle til alle}
+En soleklar måte å takle dette problemet på, er rett og slett å bruke en god algortime for et én-til-alle-problem, og så bruke denne på samtlige noder som startnoder. Dette er ikke så dumt som det kan høres ut som. Hvis alle kostnadene er ikke-negative, fungerer det meget bra å bruke Dijkstra. Kjøretiden her vil bli $O(|V|^3)$, som man ser ved å multiplisere kjøretiden til en gjennomgang av Dijkstra med antallet noder $|V|$. Hvis vi har negative kostnader og kjører samme trikset med Bellman-Ford, blir kjøretiden $O(|V|^2 |E|)$, som ikke er så veldig bra fordi $|E|$ er av størrelsesorden $|V|^2$. Nå skal det sies at med meget smarte fremgangsmåter her, vil disse kjøretidene kunne senkes betraktelig. Men vi bruker heller en algoritme som tar for seg problemet med alle-til-alle uten å skulle gå omveien om mange gjennomkjøringer av en én-til-alle-algoritme.
 
-\noindent\textbf{Floyd-Warshall}\\
+\subsubsection{Floyd-Warshall}
 Ved å benytte oss av prinsippet om \textbf{dynamisk programmering} skal vi her vise hvordan Floyd-Warshall-algoritmen fungerer.
 \\\\
 Pseudokoden for Floyd-Warshall er relativt grei. Man lager en nabomatrise til nodene, men gjør litt om på den. Hvis det går en vei fra en node til en annen, setter vi verdien til å være kostnaden på kanten mellom dem. Går det ikke en direkte kant mellom de to nodene, settes kostnaden til å være uendelig ($\infty$). Deretter velger man seg en node, kall noden \textit{a}, som man har lov til å gå innom. Så tester man veien mellom to og to noder, kall dem \textit{u} og \textit{v}. Hvis det koster mindre å gå via \textit{a}, så legger man inn denne veien til å være den korteste. Nå har vi en oversikt over de korteste veiene som kun består av enkeltkanter eller som bruker node \textit{a} (og ingen andre). Så kan vi gå videre og tillate en annen node, \textit{b}, og sjekke om vi kan få kortere veier ved å ta den i bruk osv. Etter å ha gått gjennom alle nodene på denne måten vil vi til slutt ha en oversikt over de korteste veiene uten noen begrensninger på hvilke noder som kan brukes. Det er heller ikke så veldig vanskelig å lage enda en nabomatrise som holder styr på hvilke noder man skal gå innom for å oppnå denne ultimate veien. Det er ikke så rent ulogisk at dette vil fungere, men det gjelder å få et godt grep om hva som skjer.
@@ -294,14 +291,31 @@ Vi sier at $|f|$ er flyten fra kilden til sluket, og dens verdi er rett og slett
 \label{fig:flytnettverk}
 \end{figure}
 
-\noindent \textbf{Ford-Fulkersons metode}\\
+\subsubsection{Ford-Fulkersons metode}
+Ideen her er å finne en eller annen flytforøkende vei \textit{p} og øke flyten \textit{f} på hver kant til \textit{p} med residualkapasiteten. Fremgangsmåten er så enkel som at man rett og slett finner en flytforøkende vei, og når man har gjort det setter man på all den flyten som veien kan tåle. Deretter leter man etter en ny flytforøkende vei, og gjør det samme. Når man oppdager at det ikke er mer flytforøkende veier, har man oppnådd maksimal flyt. Dette kalles for Ford-Dulkerson-metoden. Grunnen til at det ikke kalles for en algoritme er at det ikke er spesifisert hvordan man skal finne den flytforøkende veien. Måten man gjør dette på kan få drastisk innvirkning på kjøretiden.
+\\\\
+Det som kan være urovekkende, er altså hvordan man skal sjekke om det eksisterer en flytforøkende vei. Et av de bedre triksene, er å bruke et bredde-først-søk. Hvis man kombinerer Ford-Fulkersons-metoden med BFD kalles det for Edmonds-Karp-algoritme.
+
+\begin{boxed}
+Vi starter med et nettverk uten noe flyt. Det som er stiplet er en flytforøkende vei. Gangen blir som vist i Figur \ref{fig:ford-fulkerson}.
+
+\begin{figure}[H]
+\includegraphics[scale=0.45]{images/ford-fulkerson}
+\centering %centering the image
+\caption{Ford-Fulkerson}
+\label{fig:ford-fulkerson}
+\end{figure}
+\end{boxed}
+
+\noindent Hvis kapasitetene er heltall, vil man ha at kjøretiden til Ford-Fulkerson er $O(E|f^*|$, hvor $f^*|$ er den maksimale flyten, og $E$ som vanlig er antallet kanter. Dette ser man greit ved at man for hvert søk risikerer å måtte gå gjennom alle kantene, og man vil sende minst én enhet av flyten hver gang. Legg merke til at Ford-Fulkerson ikke hadde fungert dersom vi hadde hatt irrasjonale kapasiteter.  
+\\\\
 Ford-Fulkerson-metoden er en god algoritme som finner maksimal flyt i et flytnettverk. Hver iterasjon forsøker å finne en flytforøkende sti, og setter på all den flyten som er mulig. Deretter leter den etter en ny flytforøkende sti, og gjentar prosessen. Når det ikke er flere flytforøkende stier har man oppnådd maksimal flyt. Den benytter seg av DFS for å finne flytforøkende sti. Det er altså tre essensielle ideer; residualnettverk, flytforøkende vei, og snitt.\\
 
 \subsubsection{Residualnettverk}
-Som uttrykket kanskje tilsier ("residual" betyr "rest"), for et flytnettverk med en gitt flyt, består residual-nettverket av de kantene som tillater mer flyt.
+Som uttrykket kanskje tilsier ("residual" betyr "rest"), for et flytnettverk med en gitt flyt, består residual-nettverket av de kantene som tillater mer flyt. Gitt et flytnettverk \textit{G} og en flyt $f$, da skriver vi $G_f$ for residualnettverket.
 
 \begin{boxed}
-Vi beskriver ofte flyten og kapasiteten ved å skrive en brøk med flyt-verdien øverst og kapasitetsverdien nederst. Man får residual-nettverket ved å ta de opprinnelige kapasiteter og trekke fra den flyten som går i hver kant. Med flyten fra Figur \ref{fig:flytnettverk} får vi residualnettverket til å bli som vist i Figur \ref{fig:residualnettverk.}
+Vi beskriver ofte flyten og kapasiteten ved å skrive en brøk med flyt-verdien øverst og kapasitetsverdien nederst. Man får residual-nettverket ved å ta de opprinnelige kapasiteter og trekke fra den flyten som går i hver kant. Med flyten fra Figur \ref{fig:flytnettverk} får vi residualnettverket til å bli som vist i Figur \ref{fig:residualnettverk}.
 
 \begin{figure}[H]
 \includegraphics[scale=0.6]{images/residualnettverk}
@@ -312,10 +326,40 @@ Vi beskriver ofte flyten og kapasiteten ved å skrive en brøk med flyt-verdien 
 \end{boxed}
 
 \subsubsection{Flytforøkende sti}
-\subsubsection{Minimalt kutt}
-Minimum-snitt (min-cut) på et flytnettverk: det snittet som har lavest kapasitet av alle snitt. Det vil si min-cut angir en flaskehals i flytnettverket. Det vil si at det ikke kan sendes mer flyt gjennom nettverket enn det vi kan sende gjennom flaskehalsen. Man kan da ikke finne noen flytforøkende sti over flaskehalsen. Det vil da være maksimal-flyt, max-flow.\\
+En flytforøkende vei er rett og slett en enkel vei fra kilden $s$ til sluket $t$ i residualnettverket $G_f$. I Figur \ref{fig:flytforokendevei} er den stiplede veien en flytforøkende vei. Vi ser at vi kan sende en enhet i den flytforøkende vieen.
 
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/flytforokendevei}
+\centering %centering the image
+\caption{Flytforøkende vei}
+\label{fig:flytforokendevei}
+\end{figure}
 
+\subsubsection{Snitt}
+Vi definerer et snitt som følger:
+\begin{center}
+    Et snitt $(S,T)$ til et flytnettverk $G = (V,E)$ er en partisjon av nodene $V$ i $S$ og $T = V - S$ slik at kilden $s$ ligger i $S$ og sluket $t$ ligger i $T$.
+\end{center}
+\noindent Med andre ord er snittet en inndeling av alle nodene i to deler hvor kilden og sluket er i hver sin del. Vi snakker om nettoflyt og kapasitet over et snitt, hvor det førstnevnte er all flyten gjennom snittet fra kilden til sluket minus kapasitet fra sluk til kilde. Et minimalt snitt er et snitt hvis kapasitet er den minste oppnåelige.
+
+\begin{figure}[H]
+\includegraphics[scale=0.6]{images/snitt}
+\centering %centering the image
+\caption{Snitt}
+\label{fig:snitt}
+\end{figure}
+
+\noindent Det vises i Cormen at flyten gjennom et snitt $(S,t)$ rett og slett er $|f|$. Om man skjønner hva dette står for, er resultatet temmelig trivielt. Det sier bare at den flyten som sendes fra kilden og går inn i sluket, i sin helhet må krysse snittet. Ved å se på figuren over, ser man at dette er tilfellet. Tenker man litt etter, så vil man innse at dette enkle resultatet medfører det faktum at flyten $f$ i et flytnettverk $G$ har en øvre begrensning ved kapasiteten til ethvert snitt. Av dette følger et meget viktig teorem:
+\begin{center}
+    Hvis $f$ er en flyt i et flytnettverk $G = (V,E)$ med kilde $s$ og sluk $t$, så er de følgende utsagnene ekvivalente (det vil si at hvis vi vet en av dem, vet vi de andre også):
+    \begin{enumerate}
+         \item $f$ er en maksimal flyt i $G$
+        \item Residualnettverket $G_f$ har ingen flytforøkende vei
+        \item Verdien på flyten fra kilde til sluk, $|f|$ må være lik kapasiteten til et eller annet snitt.
+    \end{enumerate}
+\end{center}
+
+\noindent For å si det enkelt, det å finne det minimale snittet er det samme som å finne den maksimale flyten. Ved å tenke seg om, er dette ganske greit. Når vi har maksimal flyt, så vil det bli "kork" der hvor kapasiteten er minst, og ingenting mer kan slippe gjennom denne flaskehalsen. Det hjelper for eksempel ikke uten videre å legge trefelts motorvei fra Oslo mot svinesund når veien ut fra Oslo består av én fil. For å finne et minimalt snitt (det kan finnes flere) når man først har funnet maksimal flyt kan man gjøre et bredde-først-søk gjennom residualgrafen fra (super)kilden. De nodene man når frem til er på kildens side.
 
 \noindent \textbf{Edmonds-Karp}\\
 Endret en bokstav på Ford-Fulkerson-metoden. De benytter seg av BFS. Edmonds-Karp bruker Ford-Fulkerson og BFS til å finne flytforøkende stier.\\

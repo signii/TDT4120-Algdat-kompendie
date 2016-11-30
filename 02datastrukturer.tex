@@ -26,9 +26,6 @@ Vi har forskjellige varianter av lenkede lister, totalt åtte kombinasjoner:
     n2.next = n3
 \end{lstlisting}
 
-\subsubsection{Kjøretider}
-
-
 \subsection{Abstrakte datastrukturer}
 Forkortes ADT.
 
@@ -44,7 +41,7 @@ Kø er en \textbf{FIFO}; first in, first out. En kø implementeres som oftest so
 
 \noindent En kø er en abstrakt datastruktur som bevarer de innsatte elementers rekkefølge. Enqueue er innsettingsoperasjonen, som setter inn et element på slutten av køen. Dequeue er uthentingsoperasjonen, den henter ut fra begynnelsen av køen.
 
-\subsection{Stack}
+\subsubsection{Stack}
 Stack er en \textbf{LIFO}; last in, first out. Det kan sammenlignes med en stabel med tallerkener. Når en tallerken er nyvasket, legges den på toppen. Når du trenger en tar du den øverste i stabelen. Akkurat som at det ikke er lov å snike i en kø, er det ikke lov å stokke om på tallerkenene i en stack. Toppen av stacken er altså det eneste som er tilgjelgelig; du kan når som helst sette inn noe på toppen eller ta ut det øverste elementet (med mindre stacken er tom). En stack implementeres oftest med et array, eller en lenket liste. En stack har egenskapene INSERT, PUSH og POP (DELETE).
 
 \begin{figure}[H]
