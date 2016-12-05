@@ -29,3 +29,20 @@ SAT-problemet er ikke veldig enkelt å jobbe med. Det er ofte enklere å sammenl
 \textbf{Hamiltonsykel:} Vi kan finne en Euler-sti (kantene benyttes en og bare en gang når vi traverserer grafen, uten å hoppe) i polynomsik tid, men å bestemme om en graf har en Hamilton-sykel er et NPC-problem. (I en Hamilton-sykel besøkes nodene en og bare en gang langs en sammenhengende vei gjennom grafen, dvs. vi har en enkel sykel gjennom alle nodene i grafen.)
 \\\\
 \textbf{Travelling Salesman Problem (TSP):} Vi har en handelsmann som skal besøke $n$ byer. Han skal bare innom hver by en gang og ønsker å gjøre rundturen så billig som mulig. Poenget her er altså å finne en minimal Hamiltonsykel. Eller for å være helt korrekt er problemet å finne ut om det eksisterer en rute som er $\leq$ en gitt verdi.
+
+\subsection{Hvordan bevise at et problem er P, NP, og NPC?}
+For å bevise at et problem er med i P (dv. kan løses i polynomisk tid), må du finne en algoritme som løser problemet i polynomisk tid. 
+\\\\
+For å bevise at et problem er med i NP, må du finne en algoritme som tester om en gjettet løsning er korrekt. Denne må kjøre i polynomisk tid.
+\\\\
+For å bevise at et problem er med i NPC, må du vise at det er med i NP, og at det er minst like vanskelig som et annet problem du vet er i NPC. Det finnes bøker med lister over kjente NPC-problemer. Måten du gjør det på er å transformere det kjente problemet til ditt problem eller en enklere utgave av ditt problem. Transformasjonen må kunne gjøres i polynomisk tid. Det er på tide med et eksempel.
+
+\begin{boxed}
+Vi må først vise at TSP er med i NP. Problemet er å finne ut om det eksisterer en rute som er $\leq$ $x$ kilometer. På mystisk vis gjettes vi på det beste veivalget. Det er innlysende at vi med letthet (dvs. i polynomisk tid) kan finne ut om denne veien er kortere eller like lang som $x$. (Vi trenger bare ¨å slå opp avstandene og addere de sammen.) Dette vider at TSP er med i NP.
+\newline
+\newline
+Nå kan vi vise at TSP er med i NCP. Vi tar utgangspunkt i Hamiltonsykelproblemet. La oss si at nodene i grafen er byer og kantene er veier. Vi setter kostnaden på kantene til å være 1. Eksisterer det en tur som har lengde $\leq$ antall noder? Dette er et ``travelling salesman problem`` av enkleste sort. Poenget er at spørsmålet kunne like gjerne vært: Finnes det en Hamiltonsykel i grafen? Dette er et problem vi gikk ut i fra er NPC.
+\newline
+\newline
+Av sammenligningen skjønner vi at dersom vi finner en algoritme for å løse vårt problem (TSP), vil denne også kunne løse Hamiltonsykel-problemet. Altså kan vi konkludere med at TSP er NPC.
+\end{boxed}
