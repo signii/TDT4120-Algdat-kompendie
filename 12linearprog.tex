@@ -1,0 +1,61 @@
+\section{Lineær programmering}
+Lineær programmering er spesielt nyttig i det som kalles \textbf{optimeringsteori}. Dette går ut på å enten minimere eller maksimere en lineær funksjon med en hel del krav.
+
+\begin{boxed}
+Anta at Gløshaugen har komponert et nytt fag som kalles ``\textbf{part.kont}```som består av 50\% partikkelfysikk og 50\% kontorlandskap. Dette faget er obligatorisk for deg, og du skal levere to semesteroppgaver, en for hver del. Det gis karakter for begge. Men fordi du synes dette faget er tullete og du har mye annet å gjøre, ønsker du å bruke så lite tid på faget som mulig samtidig som du skal bestå. La oss kalle tiden du bruker på partikkelfysikk for $x_1$, og tiden på kontorlandskap $x_2$. Du vet at det vil være to sensorer, en tørr professor og en økonom. Du regner med at du får 5 poeng per arbeidstime fra den tørre professoren og 2 fra økonomen for oppgaven i partikkelfysikk, mens for kontorlandskap får du 1 poeng per arbeidstime fra den tørre professoren og økonomen gir 4. Vi oppsummerer dette i en tabell.
+
+\begin{table}[H]
+    \caption{Poeng per arbeidstime}
+    \label{tab:kjoretideks}
+    \centering
+    \begin{tabular}{|L{10em} | L{10em}|L{10em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{}} & \textbf{\textcolor{white}{Tørr professor}} & \textbf{\textcolor{white}{Økonom}}\\
+        \rowcolor[HTML]{E6E6E6}
+        Partikkelfysikk & 5 & 2\\
+        Kontorlandskap & 1 & 4\\
+         \hline
+    \end{tabular}
+\end{table}
+
+Poenget er nå at for å stå må du få minst 40 poeng for hver oppgave. For å sikredeg litt, krever du at du skal ha stått hos begge sensorene. Da kan vi sette opp et ligningssystem som ser slik ut:
+\newline
+\newline
+Minimér:
+\begin{center}
+$x_1 + x_2$
+\end{center}
+Hvor:
+\begin{center}
+$5x_1 + x_2 \geq 40$ \newline
+$2x_1 + 4x_2 \geq 40$ \newline
+$x_1, x_2 \geq 0$
+\end{center}
+Den siste ligningen viser bare at tiden vi bruker ikke kan være negativ. Uttryket $x_1 + x_2$ er en lineær funksjon som vi vil skal få en størst mulig verdi uten at verdiene av variablene bryter noen av ulikhetene. Dette kalles for et linæert program, og det kan løses med lineær programmering.
+\end{boxed}
+
+\noindent Når man skal løse et problem som dette finnes det flere avanserte metoder. Den eneste som nevnes i boken er \textbf{simplex-metoden}, som minner litt om Gauss-eliminasjon. Den tar først og oversetter alle problemene til sin egen standardform, slik at det generelt kan skrives om:
+\newline
+\newline
+Maksimér:
+\begin{center}
+$\sum\limits_{j=1}^n c_j x_j$
+\end{center}
+Hvor:
+\begin{center}
+$\sum\limits_{j=1}^n a_{ij} x_j \leq b_i$ for $i = 1, 2, ...m$ \newline
+$x_j \geq 0$ for $j = 1, 2, ..., n$
+\end{center}
+
+Som man kanskje aner, så er det ekstremt nyttig å løse slike former for problemer. Vi skal ikke her vise hvordan simplex-metoden fungerer (det er heller ikke pensum), men interesserte anbefales å se på dette, i kapittel 29.3 i læreboken. Det som derimot \textit{er} pensum er å kunne formulere problemer slik at de kan løses med lineær programmering - det vil si å sette opp et lineært program og begrunne hverfor løsningen av det lineære programmet vil være en løsning av problemet.
+\\\\
+Et \textit{lineært program} består av følgende:
+\begin{enumerate}
+    \item Et lineært uttrykk som skal maksimeres eller minimeres, kalt den \textit{objektive funksjonen}
+    \item En samling lineære ulikheter og/eller ligninger, som fungerer som restriksjoner på variablene i den objektive funksjonen.
+\end{enumerate}
+
+\noindent Med en gang man kan skrive om et problem til et lineært program, finnes det en rekke glupe algoritmer for å løse dette på. Simplex-metoden er én måte å gjøre det på, med den er gammel, og idag brukes langt mer raffinerte metoder. Vi skal her vise lett to problemer vi har vært borte i som kan oversettes til lineær programmering.
+
+%sett inn eksempler her
