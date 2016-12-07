@@ -1,0 +1,68 @@
+\section{Formler}
+\subsubsection{Håndtrykksformelen}
+Dette er én av to enkle men viktige formler som stadig dukker opp når man skal
+analysere algoritmer. Formelen er:
+\begin{center}
+$\sum\limits_{i=0}^{n-1} i = \frac{n(n-1)}{2}$
+\end{center}
+
+\noindent Den kalles gjerne håndtrykksformelen, fordi den beskriver antall håndtrykk som
+utføres om $n$ personer skal hilse på hverandre. Vi kan vise dette ved å telle antall
+håndtrykk på to ulike måter. De to resultatene må da være like.
+\\\\
+\textbf{Telling 1:} La oss se på personene én etter én. Første person hilser på alle de
+andre $n − 1$ personene. Andre person har allerede hilst på første person, men
+bidrar med $n − 2$ nye håndtrykk ved å hilse på de gjenværende. Generelt vil
+person $i$ bidra med $n − i$ nye håndtrykk, så totalen blir
+\begin{center}
+$(n − 1)$ + $(n − 2)$ + · · · + $2 + 1 + 0 $
+\end{center}
+
+\noindent Om vi snur summen, så vi får $0 + 1$ + · · · + $(n − 1)$, så er dette den venstre siden
+av ligningen. Dette oppstår typisk i algoritmer der vi utfører en løkke gjentatte
+ganger, og antall iterasjoner i løkka øker eller synker med 1 for hver gang, slik:
+
+\begin{lstlisting}
+for i = 1 . . n − 1
+    for j = i + 1 . . n
+        i tar j i h˚anden
+\end{lstlisting}
+
+\noindent Telling 2: Vi kan også telle på en mer rett frem måte: Hver person tar alle de
+andre i hånden, og inngår dermed i $n − 1$ håndtrykk. Hvis vi bare teller hver
+enkelt person sin halvdel av håndtrykket, får vi altså $n(n − 1)$ halve håndtrykk.
+To slike halve håndtrykk utgjør jo ett helt, så det totale antallet håndtrykk blir
+den høyre siden av ligningen, nemlig $n(n − 1)/2$.
+Man kan også gjøre om en sum av denne typen ved å brette den på midten, og
+legge sammen første og siste element, nest første og nest siste, etc. Vi får da
+\begin{center}
+$(n − 1 + 0) + (n − 2 + 1) + (n − 3 + 2) + . . .$
+\end{center}
+
+\noindent Hvert ledd summerer til $n−1$, og det er $n/2$ ledd. Mer generelt er summen av en
+aritmetisk rekke (der vi øker med en konstant fra ledd til ledd) lik gjennomsnittet
+av første og siste ledd, multiplisert med antallet ledd i rekken.
+
+\subsection{Utslagsturneringer}
+Dette er den andre av de to sentrale formlene:
+\begin{center}
+$\sum\limits_{i=0}^{h-1} 2^i = 2^h - 1$
+\end{center}
+Det vil si, de første toerpotensene summerer til én mindre enn den neste. En
+måte å se dette på er av totallssystemet, der et tall $a = 11$ · · · $1$ med $h$ ettall
+etterfølges av tallet $b = 100 · · · 0$, som består av ett ettall, og $h$ nuller. Her er
+\begin{center}
+$a = 20 + 21 + · · · + 2h−1 og b = 2h$, så a = b − 1.
+\end{center}
+
+\noindent Et grundigere bevis kan vi få ved å bruke samme teknikk som før, og telle
+samme ting på to ulike måter. Det vi vil telle er antall matcher i en utslagsturnering
+(knockout-turnering), det vil si, en turnering der taperen i en match er
+ute av spillet. Dette blir altså annerledes enn såkalte round robin-turneringer,
+der alle møter alle – for dem kan vi bruke håndtrykksformelen for å finne antall
+matcher, siden hver match tilsvarer ett håndtrykk.
+
+%se metode 1 og 2 i heftet
+
+\subsection{Reduksjoner}
+%se heftet

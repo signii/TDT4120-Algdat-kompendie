@@ -139,6 +139,9 @@ Legg merke til hvordan nodene kommer ut av køen i stigende rekkefølge med hens
 \subsection{Korteste vei}
 Denne typen problemer er ekstremt nyttig i mange sammenhenger. Hvis man skal kjøre bil fra et sted til et annet, vil man gjerne kjøre den korteste veien for å spare bensin og tid. I dette tilfellet holder det å se på veilengden som en kostnad for hver kant. I dette tilfellet blir kostnaden alltid positiv, men det trenger den ikke bli i andre eksempler. Hvis man skal dra rundt og selge ting og er ute etter å se på hvor mye man tjener på forskjellige ruter, kan det hende man vet at det på enkelte strekninger vil bli tap. Men det er fortsatt mulig å finne ut hvilken vei det lønner seg å ta for å tjene mest mulig penger.
 
+\subsubsection{SLOW-ALL-PAIRS-SHORTEST-PATHS}
+Tillater ikke negative sykler.
+
 \subsection{Én til alle}
 Her vi vil konsentrere oss om de problemene som har ett startpunkt, og som går til alle tenkelige sluttpunkt i den mengden man ser på. Anta at vi er fire studenter som deler kjøkken på Nedre Singsakerslette, og alle har sin egen bil og skal hjem til jul. Førstemann bor i Drøbak, den andre på Kolbotn, nummer tre på Tretten, og fjerdemann i Malvik. Da holder det at man kjører en algoritme for korteste vei, én-til-alle-problem (her kan man også benytte seg av det gunstige faktum at alle kostnader er positive, noe som dere etterhvert vil se gir enklere og raskere algoritme). Med et kart over alle byer og veier i Norge er det bare å bruke Trondheim som startpunkt og kjøre en algoritme for å finne de korteste veiene fra Trondheim til alle de andre byene, og så sjekke rutene man fikk til Drøbak, Kolbotn, Tretten og Malvik. Dermed kan alle ta hver sin bil (ikke så veldig sosialt eller økonomisk, men eksempelets intensjon helliger midlet) og kjøre korteste vei til sin hjemby. 
 \\\\
@@ -228,8 +231,9 @@ DAG-Shortest-Path er en korteste vei, en-til-alle algoritme. Tillater ikke negat
     		end for
     	end for
     end function
-
 \end{lstlisting}
+
+\subsubsection{RELAX}
 
 \subsection{Alle til alle}
 En soleklar måte å takle dette problemet på, er rett og slett å bruke en god algortime for et én-til-alle-problem, og så bruke denne på samtlige noder som startnoder. Dette er ikke så dumt som det kan høres ut som. Hvis alle kostnadene er ikke-negative, fungerer det meget bra å bruke Dijkstra. Kjøretiden her vil bli $O(|V|^3)$, som man ser ved å multiplisere kjøretiden til en gjennomgang av Dijkstra med antallet noder $|V|$. Hvis vi har negative kostnader og kjører samme trikset med Bellman-Ford, blir kjøretiden $O(|V|^2 |E|)$, som ikke er så veldig bra fordi $|E|$ er av størrelsesorden $|V|^2$. Nå skal det sies at med meget smarte fremgangsmåter her, vil disse kjøretidene kunne senkes betraktelig. Men vi bruker heller en algoritme som tar for seg problemet med alle-til-alle uten å skulle gå omveien om mange gjennomkjøringer av en én-til-alle-algoritme.
@@ -249,6 +253,8 @@ Pseudokoden for Floyd-Warshall er relativt grei. Man lager en nabomatrise til no
 \noindent Figuren viser grafen til problemet vårt. Om vi bruker algoritmen på siden 630 i Cormen, vil matrisene under utregning bli slik du ser under her. Merk at indeksen i hver matrise betyr hvilken node vi har gått innom. Den første, med indeks 0, er startmatrisen. 
 \\\\
 \noindent Kjøretiden til Floyd-Warshall er ganske enkelt $O(|V|^3)$. Det er $|V|$ noder man skal innom, og for hver gang kan man variere startnoden med $|V| - 1$ muligheter og sluttnoden med $|V| - 2$ muligheter. Om man ser på pseudokoden i Cormen, så ser man at den består av tre greie for-løkker. Nå skal det sies at også Dijkstra på alle nodene gir $O|V|^3$, men operasjonen per ledd i Floyd-Warshall er så mye mindre at denne stort sett vil lønne seg selv hvis alle kantene er positive. Dersom det er relativt få kanter i forhold til noder vil derimot Dijkstra med heap (som kjører på $O(|E| lg |V|)$ for hver av de $|V|$ nodene) lønne seg.
+
+\subsubsection{TRANSITIVE-CLOSURE}
 
 \subsubsection{FASTER-ALL-PAIRS-SHORTEST-PATHS}
 Har en kjøretid på $\theta(n^3 lg n)$. Tillater ikke negative sykler.

@@ -61,10 +61,20 @@ Søkemotoren trenger da blant annet et program som sammenligner ord. Det er dett
     \item For å programmere dette må man først opprette en tabell som har størrelse "lengdePåFeilOrd" * "lengdePåRettOrd". Deretter må du fylle inn de trivielle verdiene. Husk at verdien i $c(0,0$ avhenger av om første bokstav i de to ordene er like eller ikke. Tenk logisk her, dette er ikke vanskelig. Deretter må du lage en dobbel for-løkke som går gjennom hele matrisen, venstre mot høyre, ovenfra og ned, og fyll inn verdier ut fra reglene i punkt 3.
 \end{enumerate}
 
-\subsection{Memoisering}
+\subsection{Memoisering (top-down}
 Her benytter vi vanlig traversering, men i stedet for å løse samme problem flere ganger lagres verdiene i en tabell etterhvert. For hver verdi som skal beregnes kikker vi altså først i tabellen for å se om vi har gjort dette før, hvis ikke må vi regne.
 \\\\
 Vi velger memoisering og ikke dynamisk programmering når vi ikke trenger å regne ut alle underproblemene for å løse hovedproblemet.
 
+
+
 \subsection{Lengste felles understreng}
+
+\subsection{Iterasjon (bottom-up)}
 \subsection{Rod-cutting}
+\subsection{Optimal delstruktur}
+\subsection{Overlappende delproblemer}
+\subsection{Segment}
+\subsubsection{Underfølge}
+\subsection{0-1 ryggsekkproblemet}
+Løsningen er ikke polynomisk. Er NP-hardt.

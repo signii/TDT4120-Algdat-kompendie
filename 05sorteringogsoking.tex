@@ -4,9 +4,13 @@
 Sortering er en av de viktigste operasjonene man har, og det brukes også mye som en del av andre operasjoner. Tenk for eksempel hvis du spiller kortspillet bridge. Da får du utdelt 13 kort, og for å ha oversikt over hvor bra hånden din er sorterer du den etter farge og kortenes valør innad i hver farge.
 
 \subsubsection{Stabilitet}
+At en sorteringalgoritme er stabil vil si at den ikke bytter om på like elementer.
+
+\subsubsection{Splitt og hersk/Divide and conquer}
+%strukturell induksjon
 
 \subsection{Sammenligningsbaserte sorteringsalgoritmer}
-Dette er en av to grupper sortering. Felles i denne gruppen er at soteringen skjer ved sammenligning av to elementer. De fleste av disse metodene klarer seg med å jobbe direkte i den originale inputlisten (altså at de ikke trenger å opprette nye, midlertidige lister), og disse sies å være "in place" sorteringsalgoritmer.
+Dette er en av to grupper sortering. Felles i denne gruppen er at soteringen skjer ved sammenligning av to elementer. De fleste av disse metodene klarer seg med å jobbe direkte i den originale inputlisten (altså at de ikke trenger å opprette nye, midlertidige lister), og disse sies å være "in place" sorteringsalgoritmer. Sammenligningsbasert sortering har en worst-case på $\Omega(n lg n)$.
 
 \subsubsection{BUBBLESORT}
 Dette kan sies å være den enkleste og mest naive av alle sorteringsalgoritmer. Bubblesort tester to og to naboelementer, og dersom den finner at det første elementet er større enn det neste bytter de plass. Effektiv på små datamengder. Denne algoritmen bruker sammenligning, og skjer "in place".
@@ -278,9 +282,9 @@ Build-max-heap går gjennom de resterende nodene av treet og kjører MAX-HEAPIFY
 \subsubsection{MAX-HEAP-INSERT}
 
 \subsubsection{QUICKSORT}\\
-Quicksort er en av de desidert mest populære sorteringene i bruk. Den bruker, som flettesortering, en form for \textit{splitt og hersk}-metode. Denne algoritmen kan deles i tre trinn:\newline \newline
+Quicksort er en av de desidert mest populære sorteringene i bruk. Den bruker, som flettesortering, en form for \textit{splitt og hersk}-metode. Denne algoritmen kan deles i tre trinn:\newline
 
-\textit{Partisjonér:} Velg ut et element i mengden du vil sortere. La oss kalle dette \textbf{pivotelementet} for $a$. Så deler vi mengden i to mindre mengder slik at alle elementer mindre eller lik $a$ danner den ene mengden, mens resten (som da er større enn $a$) danner den andre mengden.
+\noindent\textit{Partisjonér:} Velg ut et element i mengden du vil sortere. La oss kalle dette \textbf{pivotelementet} for $a$. Så deler vi mengden i to mindre mengder slik at alle elementer mindre eller lik $a$ danner den ene mengden, mens resten (som da er større enn $a$) danner den andre mengden.
 
 \begin{boxed}
 Anta at du har tallene 2 8 7 1 3 6 4
@@ -327,6 +331,31 @@ Gitt at vi klarer å velge elementet $a$ slik at den deler mengden i to nesten h
     end function
 \end{lstlisting}
 
+\begin{table}[H]
+    %\caption{}
+    \label{tab:bubblesort}
+    \centering
+    \begin{tabular}{|L{15em} | L{15em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Tilfelle}} & \textbf{\textcolor{white}{}}\\
+        \rowcolor[HTML]{E6E6E6}
+        Best case & $\theta(n lg n)$\\
+        Average case & $\theta(n lg n)$\\
+        \rowcolor[HTML]{E6E6E6}
+        Worst case & $\theta(n^2)$\\
+        Minne & $\theta(lg n)$\\
+        \rowcolor[HTML]{E6E6E6}
+        In-place & Ja\\
+        Stabil & Nei\\
+        \rowcolor[HTML]{E6E6E6}
+        Paralelliserbar & Nei\\
+         \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{PARTITION}
+
 \begin{lstlisting}
     function PARTITION(A,p,r)
 	    x = A[r]
@@ -341,6 +370,9 @@ Gitt at vi klarer å velge elementet $a$ slik at den deler mengden i to nesten h
     	return i + 1
     end function
 \end{lstlisting}
+
+\subsubsection{RANDOMIZED-QUICKSORT}
+Basert på designmetoden divide-and-conquer. Bruker subrutinen PARTITION. Endrer kjøretid fra beste til verste tilfelle.
 
 \subsection{Sortering i lineær tid}
 Hvis man kjenner til en del egenskaper ved mengden man skal sortere på forhånd kan man senke kjøretiden betraktelig.
@@ -448,6 +480,29 @@ Det er viktig at man bruker en lineær sorteringsalgoritme (som f.eks. tellesort
     end function
 \end{lstlisting}
 
+\begin{table}[H]
+    %\caption{}
+    \label{tab:bubblesort}
+    \centering
+    \begin{tabular}{|L{15em} | L{15em}|}
+        \hline
+        \rowcolor[HTML]{303F9F}
+        \textbf{\textcolor{white}{Tilfelle}} & \textbf{\textcolor{white}{}}\\
+        \rowcolor[HTML]{E6E6E6}
+        Best case & $\theta(d(n + k))$\\
+        Average case & $\theta(d(n + k))$\\
+        \rowcolor[HTML]{E6E6E6}
+        Worst case & $\theta(d(n + k))$\\
+        Minne & $\theta(n + k)$\\
+        \rowcolor[HTML]{E6E6E6}
+        In-place & Nei\\
+        Stabil & Ja\\
+        \rowcolor[HTML]{E6E6E6}
+        Paralelliserbar & Nei\\
+         \hline
+    \end{tabular}
+\end{table}
+
 \subsubsection{BUCKETSORT}
 Bucketsort er nesten helt lik tellesortering, men bruker såkalte “bøtter” man putter tallene i. Trikset er at man lager "bøtter", eller tallintervaller, i listen i stedet for bare enkelttall. For eksempel [3,4) betyr at verdier større eller lik 3, men mindre enn 4 skal i bøtten. Når man har lagt alle tallene som skal sorteres inn i de tilhørende bøttene, sorterer man innholdet i hver bøtte etter en kjent og kjær sammenligningssortering, f.eks. insertion sort, og kombinerer det sorterte innholdet i bøttene til slutt.
 \\\\
@@ -494,33 +549,45 @@ Når dette så skal setter sammen til en sortert tallfølge hentes tallene opp f
 Tallfølgen blir da til slutt 3,9, 21, 25, 29, 37, 43, 49.
 \end{boxed}
 
+
+
+\subsubsection{SELECTION SORT}
+Denne metoden er en av de enkleste å sortere på, og en av de tregeste. For hver iterasjon finner man det største usorterte elementet, og bytter ut med det siste usorterte elementet. Denne algoritmen er veldig treg. Det vil ta $n$ operasjoner for å finne det største elementet, og siden dette gjøres $n$ ganger (ved hver iterasjon). Dermed får man kjøretiden $O(n^2)$. Bruker sammenligning.
+
+\begin{boxed}
+Gitt tallfølgen 8, 5, 2, 6, 9, 3, 1, 4, 0, 7. Vi begynner på plass null og ser hva verdien er der; 8. Går gjennom hele rekken for å finne noe lavere. 5 er lavere, så vi holder av den. 2 er lavere, 1 enda lavere, 0 lavest. 0 og 8 bytter plass. Tallfølgen er nå 0, 5, 2, 6, 9, 3, 1, 4, 8, 7. Ser på plass en. Denne er 5. Leter etter noe mindre. 2 er mindre, 1 er mindre. Bytter om 5 og 1. Tallene er nå 0, 1, 2, 6, 9, 3, 5, 4, 8, 7. Ser på plass to; 2. Ingen mindre, ok. Ser på plass tre; 6. 3 er mindre. Bytter 6 og 3. 0, 1, 2, 3, 9, 6, 5, 4, 8, 7. Ser så på plass fire; 9. 6 er mindre, 5 er mindre, 4 er mindre. 4 og 9 bytter plass. 0, 1, 2, 3, 4, 6, 5, 9, 8, 7. Ser på plass fem: 6. 5 er mindre. Bytter plass. 0, 1, 2, 3, 4, 5, 6, 9, 8, 7. Plass seks; 6. 0, 1, 2, 3, 4, 5, 6, 9, 8, 7. Ok. Plass syv; 9. 8 er mindre, 7 er mindre. Bytter 9 og 7. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Plass åtte; 8. Ok. Plass ni; 9. Ok.
+\end{boxed}
+
 \begin{table}[H]
     %\caption{}
-    \label{tab:bucketsort}
+    \label{tab:selectionsort}
     \centering
     \begin{tabular}{|L{15em} | L{15em}|}
         \hline
         \rowcolor[HTML]{303F9F}
         \textbf{\textcolor{white}{Tilfelle}} & \textbf{\textcolor{white}{}}\\
         \rowcolor[HTML]{E6E6E6}
-        Best case & $\theta(n)$\\
-        Average case & $\theta(n)$\\
+        Best case & $\theta(n^2)$\\
+        Average case & $\theta(n^2)$\\
         \rowcolor[HTML]{E6E6E6}
         Worst case & $\theta(n^2)$\\
-        Minne & $\theta(n)$\\
+        Minne & $\theta(1)$\\
         \rowcolor[HTML]{E6E6E6}
-        In-place & Nei\\
-        Stabil & Ja\\
+        In-place & Ja\\
+        Stabil & Nei\\
         \rowcolor[HTML]{E6E6E6}
         Paralelliserbar & Nei\\
          \hline
     \end{tabular}
 \end{table}
 
-\subsubsection{SELECTION SORT}
-%FYLL INN HER
+\subsubsection{SELECT}
+Basert på designmetoden divide-and-conquer. Har kjøretid $O(n)$ i verste tilfelle, dersom $k = O(n)$ og $d = O(1)$. Bruker subrutinen PARTITION.
 
-\subsubsection{Topologisk sortering}
+\subsubsection{RANDOMIZED-SELECT}
+Basert på designmetoden divide-and-conquer. Bruker subrutinen PARTITION. Endrer kjøretid fra beste til verste tilfelle.
+
+\subsubsection{TOPOLOGICAL-SORT}
 %FYLL INN HER
 Topologisk sortering bruker en DAG til å finne en rekkefølge gjennom alle elementene i grafen. Det tillates ikke sykler. Man begynner i noden som ikke har noen kanter inn til seg.
 
