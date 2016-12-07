@@ -34,10 +34,19 @@ Egenskaper sorteringsalgoritmer kan ha:
 \subsubsection{Stabilitet}
 At en sorteringalgoritme er stabil vil si at den ikke bytter om på like elementer.
 
-\subsubsection{Splitt og hersk/Divide and conquer}
+\subsection{Splitt og hersk/Divide and conquer}
 %strukturell induksjon
 
-Problemene deles opp i flere delproblemer som ligner på hovedproblemet men i mindre størrelse, og løser problemene rekursivt. Deretter kombineres løsningene for å få en løsning på det originale problemet.
+Problemene deles opp i flere delproblemer som ligner på hovedproblemet men i mindre størrelse, og løser problemene rekursivt. Deretter kombineres løsningene for å få en løsning på det originale problemet. MERGE SORT følger denne paradigmen tett.
+\\\\
+Paradigmen involverer tre steg i hver grad av rekursjonen:
+\begin{itemize}
+    \item \textbf{Splitte} problemet opp i et antall subproblemer som er mindre instanser av det samme problemet.
+    \item \textbf{Herske} over problemene ved å løse de rekursivt. Hvis subproblemenes størrelser er små nok, kan de løses rett frem.
+    \item \textbf{Kombinér} løsningene sammen til en løsning på originalproblemet.
+\end{itemize}
+
+\noindent Når en algoritme inneholder et rekursivt kall til seg selv, kan vi ofte beskrive kjøretiden med en rekurrensligning.
 
 \subsection{Sammenligningsbaserte sorteringsalgoritmer}
 Dette er en av to grupper sortering. Felles i denne gruppen er at soteringen skjer ved sammenligning av to elementer. De fleste av disse metodene klarer seg med å jobbe direkte i den originale inputlisten (altså at de ikke trenger å opprette nye, midlertidige lister), og disse sies å være "in place" sorteringsalgoritmer. Sammenligningsbasert sortering har en worst-case på $\Omega(n lg n)$.
@@ -402,7 +411,7 @@ Gitt at vi klarer å velge elementet $a$ slik at den deler mengden i to nesten h
 \end{lstlisting}
 
 \subsubsection{RANDOMIZED-QUICKSORT}
-Basert på designmetoden divide-and-conquer. Bruker subrutinen PARTITION. Endrer kjøretid fra beste til verste tilfelle.
+Basert på designmetoden \textit{divide-and-conquer}. Bruker subrutinen PARTITION. Endrer kjøretid fra beste til verste tilfelle. Bruker en tilfeldig pivot for å unngå konsekvent worst case ved bestemte inputs (som f.eks. ferdig sortert liste).
 
 \subsection{Sortering i lineær tid}
 Hvis man kjenner til en del egenskaper ved mengden man skal sortere på forhånd kan man senke kjøretiden betraktelig.
