@@ -1,5 +1,57 @@
 \section{Kjøretider til pensumalgoritmer}
+\begin{table}[]
+\centering
+\label{oversikt}
+\begin{tabular}{|c|l|l|l|l|}
+\hline
+\multirow{\textbf{Problem}} & \multirow{\textbf{Algoritme}} & \multicolumn{3}{c|}{\textbf{Kjøretid}}    \\ \cline{3-5} & & \multicolumn{1}{c|}{\textbf{BC}} & \multicolumn{1}{c|}{\textbf{AC}} & \multicolumn{1}{c|}{\textbf{WC}} \\ 
+\hline
+\multirow{\textbf{Sortering}} & Insertion sort  & $\theta(n)$  & $\theta(n^2)$ & $\theta(n^2)$ \\ \cline{2-5}
+ & Bubble sort & $\theta(n)$ & $\theta(n^2)$ & $\theta(n^2)$ \\ \cline{2-5} 
+ & Merge sort & $\theta(n lg (n))$ &  $\theta(n lg (n))$ & $O(n lg (n))$\\ \cline{2-5} 
+ & Heap sort & $O(n lg (n))$ & $O(n lg (n))$ &$O(n lg (n))$\\ \cline{2-5} 
+ & Quicksort & $\theta(n lg (n))$ & $O(n lg (n))$ & $\theta(n^2)$ \\ \cline{2-5} 
+ & Counting sort & - & $\theta(n)$ & $\theta(k + n)$ hvis $k = O(n)$ \\ \cline{2-5} 
+ & Radix sort & - & $\theta(d(k + n))$ & - \\ \cline{2-5} 
+ & Bucket sort & -  & $\theta(n)$ & -\\ \hline
+\multirow{\textbf{Grafer/trær}} & Topologisk sortering & - & $\theta(|V|+|E|)$ & -\\ \cline{2-5} 
+ & DFS  & - & $\theta(|V|+|E|)$ & -\\ \cline{2-5} 
+ & BFS & - & $O(|V|+|E|)$ & - \\ \cline{2-5} 
+ & Prim & $O(E lg(V))$ & $O(E lg(V))$ & - \\ \cline{2-5} 
+ & Kruskal & $O(E lg(V))$ & $O(E lg(V))$ & -\\ \cline{2-5} 
+ & Binærsøk & $O(lg n)$ & - & $O(lg n)$\\ \hline
+\multicolumn{1}{|l|}{\multirow{\textbf{Korteste vei}}} & Bellman-Ford & - & $O(|V|*|E|)$ & -\\ \cline{2-5} 
+\multicolumn{1}{|l|}{} & Dijkstra & $O(|E| lg (|V|))$ (bin-heap) & $O(|V|^2)$ (array) & -\\ \cline{2-5} 
+\multicolumn{1}{|l|}{} & DAG-Shortest-Path & - & $\theta(|V|*|E|)$ & \\ \cline{2-5} 
+\multicolumn{1}{|l|}{} & Floyd-Warshall & - & $\theta(|V|^3)$ & -\\ \hline
+\multicolumn{1}{|l|}{\multirow{\textbf{Flyt}}} & Ford-Fulkerson & - & $O(E|f^*|)$  &  $f^*$ = maks flyt i G\\ \cline{2-5} 
+\multicolumn{1}{|l|}{} & Edmonds-Karp & - & $O(VE^2)$ & -\\ \hline
+\multicolumn{1}{|l|}{\textbf{Grådig}} & Huffmann & $O(n lg (n))$ &- &-\\ \hline
+\end{tabular}
+\end{table}
+
 \subsection{Sortering og velging}
+\subsubsection{INSERTION SORT}
+\subsubsection{MERGE SORT}
+\subsubsection{QUICKSORT}
+\subsubsection{RANDOMIZED-QUICKSORT}
+\subsubsection{COUNTING SORT}
+\subsubsection{RADIX SORT}
+\subsubsection{BUCKET SORT}
+\subsubsection{HEAPSORT}
 \subsection{Heap-operasjoner}
 \subsection{Graf-operasjoner}
+\subsubsection{TOPOLOGISK SORTERING}
+\subsubsection{BFS}
+\subsubsection{DFS}
+\subsection{Korteste vei}
+\subsubsection{BELLMAN-FORD}
+\subsubsection{DAG-SHORTEST-PATH}
+\subsubsection{DIJKSTRA}
+\subsubsection{FLOYD-WARSHALL}
+\subsection{Flytalgoritmer}
+\subsubsection{FORD-FULKERSON}
+\subsubsection{EDMONDS-KARP}
+\subsection{Grådige algoritmer}
+\subsubsection{HUFFMAN}
 \subsection{Andre algoritmer}

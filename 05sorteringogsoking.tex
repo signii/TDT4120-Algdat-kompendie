@@ -2,6 +2,34 @@
 
 \subsection{Sortering}
 Sortering er en av de viktigste operasjonene man har, og det brukes også mye som en del av andre operasjoner. Tenk for eksempel hvis du spiller kortspillet bridge. Da får du utdelt 13 kort, og for å ha oversikt over hvor bra hånden din er sorterer du den etter farge og kortenes valør innad i hver farge.
+\\\\
+Egenskaper sorteringsalgoritmer kan ha:
+\begin{itemize}
+    \item Sammenligning
+    \begin{itemize}
+        \item Tregt: O(n2)
+        \begin{itemize}
+            \item Bubblesort
+            \item Insertion-sort
+            \item Selection
+        \end{itemize}
+        \item Optimalt: $O(n lg n)$
+        \begin{itemize}
+            \item Heapsort
+            \item Merge-sort
+            \item Quicksort
+        \end{itemize}
+    \end{itemize}
+    \item Ikke sammenligning
+    \begin{itemize}
+        \item $O(n)$
+        \begin{itemize}
+            \item Counting-sort
+            \item Radix-sort
+            \item Bucket-sort
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
 
 \subsubsection{Stabilitet}
 At en sorteringalgoritme er stabil vil si at den ikke bytter om på like elementer.
@@ -582,7 +610,11 @@ Gitt tallfølgen 8, 5, 2, 6, 9, 3, 1, 4, 0, 7. Vi begynner på plass null og ser
 \end{table}
 
 \subsubsection{SELECT}
+% https://www.youtube.com/watch?v=9K8L1vjAmk0
 Basert på designmetoden divide-and-conquer. Har kjøretid $O(n)$ i verste tilfelle, dersom $k = O(n)$ og $d = O(1)$. Bruker subrutinen PARTITION.
+\\\\
+SELECT gjør det samme som RANDOMIZED-SELECT – den bare velger pivot litt smartere. Den gjør det ved å først dele inn tabellen i grupper og å finne medianen i hver av disse (vha. INSERTION-SORT), og så bruker den SELECT rekursivt for å finne medianen av disse medianene. Denne medianen av medianer brukes så som pivot på samme måte som i RANDOMIZED-SELECT, og vi fortsetter rekursivt i riktig halvdel.
+
 
 \subsubsection{RANDOMIZED-SELECT}
 Basert på designmetoden divide-and-conquer. Bruker subrutinen PARTITION. Endrer kjøretid fra beste til verste tilfelle.
