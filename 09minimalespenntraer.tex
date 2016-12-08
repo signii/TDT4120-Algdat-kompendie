@@ -159,7 +159,7 @@ Vi har tre muligheter:
 \end{boxed}
 
 \subsection{Minimale spenntrær}
-Som vi vet er et tre en forbundet graf uten sykler. Et \textbf{spenntre} er en subgraf av en graf \textit{G} som inneholder \textit{V - 1} kanter. Et \textbf{minimalt spenntre}, forkortet MST, av en vektet graf \textit{G} er et spenntre av \textit{G} som er slik at summen av kostnadene til kantene som inngår i treet, er minimal (det vil si at det ikke er mulig å lage andre spenntrær men mindre kantkostnader). Et MST er ikke nødvendigvis unikt – den kan altså finnes flere MST'er for samme graf.
+Som vi vet er et tre en forbundet graf uten sykler. Et \textbf{spenntre} er en subgraf av en graf \textit{G} som inneholder \textit{V - 1} kanter. Et \textbf{minimalt spenntre}, forkortet MST, av en vektet graf \textit{G} er et spenntre av \textit{G} som er slik at summen av kostnadene til kantene som inngår i treet, er minimal (det vil si at det ikke er mulig å lage andre spenntrær med mindre kantkostnader). Et MST er ikke nødvendigvis unikt – den kan altså finnes flere MST'er for samme graf.
 
 \subsubsection{Prim}
 Prinsippet med Prims algoritme er å alltid begynne med en tilfeldig node. I hvert steg ser man på alle kanter som forbinder en node som er med i treet man har bygget hittil med en node som ikke er med, og velger den kanten med minst kostnad. Dette gjøres ved å ha de ubrukte nodene i en prioritetskø, og markere hver node med den korteste kanten som forbinder den med en node i treet. Når alle nodene er med i treet, har du funnet et minimalt spenntre.
