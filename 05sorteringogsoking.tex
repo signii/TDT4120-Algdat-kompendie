@@ -168,7 +168,7 @@ Anta at du har tallene 8 3 9 13 12 2 14 10 5
 5. steg: Etter siste fletting er alle tallene sortert!    \hfill 2 3 5 8 9 10 12 13 14
 \end{boxed}
 
-\noindent Kjøretiden til flettesortering er \textbf{$\theta(n*log(n))$} i gjennomsnittlig verste kjøretid. Logaritmen kommer inn i bildet når du deler opp problemet. Vi forklarer dette intuitivt. For et dobbelt så stort antall input-elementer trenger du kun dele en eneste gang i to deler, alik at de to delene hver for seg tar like lang tid som for den opprinnelige mengden av problemer. Slik vil du kun trenge en ekstra deling av problemet når det blir dobbelt så stort. Multiplikasjonen med $n$ kommer av at når du skal flette sammen de to siste delene, må du sjekke alle elementene en gang mot et annet.
+\noindent Kjøretiden til flettesortering er \textbf{$\theta(n*log(n))$} i gjennomsnittlig verste kjøretid. Logaritmen kommer inn i bildet når du deler opp problemet. Vi forklarer dette intuitivt. For et dobbelt så stort antall input-elementer trenger du kun dele en eneste gang i to deler, alik at de to delene hver for seg tar like lang tid som for den opprinnelige mengden av problemer. Slik vil du kun trenge en ekstra deling av problemet når det blir dobbelt så stort. Multiplikasjonen med $n$ kommer av at når du skal flette sammen de to siste delene, må du sjekke alle elementene en gang mot et annet. 
 
 \begin{lstlisting}
     function MERGE-SORT(A,p,r)
